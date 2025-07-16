@@ -11,5 +11,15 @@
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "@tailwindcss/oxide",
+            "esbuild",
+            "sharp",
+            "unrs-resolver",
+            "@nestjs/core",
+            "@openapitools/openapi-generator-cli"
+        ]
+    }
 }
