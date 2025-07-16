@@ -1,0 +1,15 @@
+{
+    "name": "mono-example",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Monorepo example with .NET backend and Next.js frontend",
+    "packageManager": "pnpm@10.5.0",
+    "scripts": {
+        "dev": "pnpm run --parallel dev",
+        "build": "pnpm run --recursive build",
+        "clean": "pnpm run --recursive clean"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
