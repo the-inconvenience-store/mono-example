@@ -277,15 +277,15 @@ React components are similar to Blazor components - they encapsulate UI and logi
 
 **Function Component** (Modern React):
 
-```typescript
+```tsx
 // Like a method that returns HTML
 function WeatherCard({ forecast }: { forecast: WeatherForecast }) {
-    return (
-        <div className="weather-card">
-            <h3>{forecast.summary}</h3>
-            <p>{forecast.temperatureC}°C</p>
-        </div>
-    );
+  return (
+    <div className="weather-card">
+      <h3>{forecast.summary}</h3>
+      <p>{forecast.temperatureC}°C</p>
+    </div>
+  );
 }
 ```
 
@@ -295,7 +295,7 @@ Hooks are React's way of managing state and lifecycle, similar to properties and
 
 **useState Hook** - Like a property with getter/setter:
 
-```typescript
+```tsx
 function WeatherDashboard() {
   // Like: public List<WeatherForecast> Forecasts { get; set; } = new();
   const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
@@ -308,7 +308,7 @@ function WeatherDashboard() {
 
 **useEffect Hook** - Like lifecycle events:
 
-```typescript
+```tsx
 function WeatherDashboard() {
   const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
 
@@ -335,25 +335,24 @@ function WeatherDashboard() {
 
 Props are like method parameters, but for components:
 
-```typescript
+```tsx
 // Interface definition (like method signature)
 interface WeatherCardProps {
-    forecast: WeatherForecast;
-    onSelect?: (forecast: WeatherForecast) => void;
+  forecast: WeatherForecast;
+  onSelect?: (forecast: WeatherForecast) => void;
 }
 
 // Component usage
 function WeatherCard({ forecast, onSelect }: WeatherCardProps) {
-    return (
-        <div
-            className="weather-card"
-            onClick={() => onSelect?.(forecast)}
-        >
-            <h3>{forecast.summary}</h3>
-            <p>{forecast.temperatureC}°C / {forecast.temperatureF}°F</p>
-            <small>{forecast.date?.toLocaleDateString()}</small>
-        </div>
-    );
+  return (
+    <div className="weather-card" onClick={() => onSelect?.(forecast)}>
+      <h3>{forecast.summary}</h3>
+      <p>
+        {forecast.temperatureC}°C / {forecast.temperatureF}°F
+      </p>
+      <small>{forecast.date?.toLocaleDateString()}</small>
+    </div>
+  );
 }
 ```
 
@@ -388,45 +387,45 @@ src/app/
 
 **Server Components** (Default) - Rendered on server:
 
-```typescript
+```tsx
 // Runs on server, like Razor Pages
 export default async function WeatherPage() {
-    // This runs on the server
-    const forecasts = await weatherApi.getWeatherForecast();
+  // This runs on the server
+  const forecasts = await weatherApi.getWeatherForecast();
 
-    return (
-        <div>
-            <h1>Weather Forecast</h1>
-            {forecasts.map(forecast => (
-                <WeatherCard key={forecast.date} forecast={forecast} />
-            ))}
-        </div>
-    );
+  return (
+    <div>
+      <h1>Weather Forecast</h1>
+      {forecasts.map((forecast) => (
+        <WeatherCard key={forecast.date} forecast={forecast} />
+      ))}
+    </div>
+  );
 }
 ```
 
 **Client Components** - Interactive on client:
 
-```typescript
-'use client'; // Mark as client component
+```tsx
+"use client"; // Mark as client component
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export function WeatherDashboard() {
-    const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
+  const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
 
-    // This runs in the browser
-    useEffect(() => {
-        loadForecasts();
-    }, []);
+  // This runs in the browser
+  useEffect(() => {
+    loadForecasts();
+  }, []);
 
-    // Component can handle user interactions
-    return (
-        <div>
-            <button onClick={loadForecasts}>Refresh</button>
-            {/* Weather cards */}
-        </div>
-    );
+  // Component can handle user interactions
+  return (
+    <div>
+      <button onClick={loadForecasts}>Refresh</button>
+      {/* Weather cards */}
+    </div>
+  );
 }
 ```
 
@@ -434,7 +433,7 @@ export function WeatherDashboard() {
 
 **Static Generation** - Like static site generation:
 
-```typescript
+```tsx
 // Generates all possible pages at build time
 export async function generateStaticParams() {
   const forecasts = await weatherApi.getWeatherForecast();
@@ -530,7 +529,7 @@ NEXT_PUBLIC_APP_NAME="Weather App"
 
 Tailwind provides utility classes for styling, similar to Bootstrap but more granular:
 
-```typescript
+```tsx
 // Traditional CSS approach
 <div className="weather-card">
     <h3 className="title">Sunny</h3>
@@ -560,32 +559,58 @@ npx shadcn@latest add badge
 
 **Using Shadcn Components**:
 
-```typescript
-import { Button } from "@/components/ui/button";
+```tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { WeatherForecast } from "@/lib/api-client";
 
-function WeatherCard({ forecast }: { forecast: WeatherForecast }) {
-    return (
-        <Card className="w-full max-w-sm">
-            <CardHeader>
-                <CardTitle>{forecast.summary}</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold">
-                        {forecast.temperatureC}°C
-                    </span>
-                    <Badge variant="secondary">
-                        {forecast.temperatureF}°F
-                    </Badge>
-                </div>
-                <Button className="w-full mt-4" variant="outline">
-                    View Details
-                </Button>
-            </CardContent>
-        </Card>
-    );
+interface WeatherCardProps {
+  forecast: WeatherForecast;
+}
+
+export function WeatherCard({ forecast }: WeatherCardProps) {
+  const formatDate = (date?: Date) => {
+    if (!date) return "Unknown";
+    return new Date(date).toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const getTemperatureColor = (temp?: number) => {
+    if (!temp) return "text-gray-500";
+    if (temp < 0) return "text-blue-600";
+    if (temp < 15) return "text-blue-400";
+    if (temp < 25) return "text-green-500";
+    return "text-red-500";
+  };
+
+  return (
+    <Card className="w-full">
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-sm font-medium">
+            {formatDate(forecast.date)}
+          </CardTitle>
+          <Badge variant="outline">{forecast.summary || "Unknown"}</Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="flex justify-between items-center">
+          <span
+            className={`text-2xl font-bold ${getTemperatureColor(forecast.temperatureC)}`}
+          >
+            {forecast.temperatureC}°C
+          </span>
+          <span className="text-sm text-gray-500">
+            {forecast.temperatureF}°F
+          </span>
+          <Button variant="weather">View More</Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 ```
 
@@ -604,7 +629,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         // Add your custom variant
-        weather: "bg-blue-500 text-white hover:bg-blue-600",
+        weather: "bg-blue-500 text-white hover:bg-blue-500/90",
       },
     },
   }
@@ -644,91 +669,35 @@ export type { WeatherForecast } from "api-client";
 
 ### **Step 2: Create Weather Components**
 
-**`src/components/weather/WeatherCard.tsx`** - Individual forecast card:
-
-```typescript
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { WeatherForecast } from '@/lib/api-client';
-
-interface WeatherCardProps {
-    forecast: WeatherForecast;
-}
-
-export function WeatherCard({ forecast }: WeatherCardProps) {
-    const formatDate = (date?: Date) => {
-        if (!date) return 'Unknown';
-        return new Date(date).toLocaleDateString('en-US', {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric'
-        });
-    };
-
-    const getTemperatureColor = (temp?: number) => {
-        if (!temp) return 'text-gray-500';
-        if (temp < 0) return 'text-blue-600';
-        if (temp < 15) return 'text-blue-400';
-        if (temp < 25) return 'text-green-500';
-        return 'text-red-500';
-    };
-
-    return (
-        <Card className="w-full">
-            <CardHeader className="pb-2">
-                <div className="flex justify-between items-center">
-                    <CardTitle className="text-sm font-medium">
-                        {formatDate(forecast.date)}
-                    </CardTitle>
-                    <Badge variant="outline">
-                        {forecast.summary || 'Unknown'}
-                    </Badge>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <div className="flex justify-between items-center">
-                    <span className={`text-2xl font-bold ${getTemperatureColor(forecast.temperatureC)}`}>
-                        {forecast.temperatureC}°C
-                    </span>
-                    <span className="text-sm text-gray-500">
-                        {forecast.temperatureF}°F
-                    </span>
-                </div>
-            </CardContent>
-        </Card>
-    );
-}
-```
-
 **`src/components/weather/WeatherGrid.tsx`** - Grid of weather cards:
 
-```typescript
-import { WeatherForecast } from '@/lib/api-client';
-import { WeatherCard } from './WeatherCard';
+```tsx
+import { WeatherForecast } from "@/lib/api-client";
+import { WeatherCard } from "./WeatherCard";
 
 interface WeatherGridProps {
-    forecasts: WeatherForecast[];
+  forecasts: WeatherForecast[];
 }
 
 export function WeatherGrid({ forecasts }: WeatherGridProps) {
-    if (forecasts.length === 0) {
-        return (
-            <div className="text-center py-8">
-                <p className="text-gray-500">No weather data available</p>
-            </div>
-        );
-    }
-
+  if (forecasts.length === 0) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {forecasts.map((forecast, index) => (
-                <WeatherCard
-                    key={forecast.date?.toString() || index}
-                    forecast={forecast}
-                />
-            ))}
-        </div>
+      <div className="text-center py-8">
+        <p className="text-gray-500">No weather data available</p>
+      </div>
     );
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {forecasts.map((forecast, index) => (
+        <WeatherCard
+          key={forecast.date?.toString() || index}
+          forecast={forecast}
+        />
+      ))}
+    </div>
+  );
 }
 ```
 
@@ -736,48 +705,46 @@ export function WeatherGrid({ forecasts }: WeatherGridProps) {
 
 **`src/app/weather/page.tsx`** - Server-rendered weather page:
 
-```typescript
-import { weatherApi } from '@/lib/api-client';
-import { WeatherGrid } from '@/components/weather/WeatherGrid';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+```tsx
+import { weatherApi } from "@/lib/api-client";
+import { WeatherGrid } from "@/components/weather/WeatherGrid";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata = {
-    title: 'Weather Forecast',
-    description: 'Current weather forecast data',
+  title: "Weather Forecast",
+  description: "Current weather forecast data",
 };
 
 export default async function WeatherPage() {
-    try {
-        // This runs on the server
-        const forecasts = await weatherApi.getWeatherForecast();
+  try {
+    // This runs on the server
+    const forecasts = await weatherApi.getWeatherForecast();
 
-        return (
-            <div className="container mx-auto py-8">
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">Weather Forecast</h1>
-                    <Button asChild>
-                        <Link href="/weather/interactive">
-                            Interactive Dashboard
-                        </Link>
-                    </Button>
-                </div>
+    return (
+      <div className="container mx-auto py-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Weather Forecast</h1>
+          <Button asChild>
+            <Link href="/weather/interactive">Interactive Dashboard</Link>
+          </Button>
+        </div>
 
-                <WeatherGrid forecasts={forecasts} />
-            </div>
-        );
-    } catch (error) {
-        return (
-            <div className="container mx-auto py-8">
-                <h1 className="text-3xl font-bold mb-4">Weather Forecast</h1>
-                <div className="bg-red-50 border border-red-200 rounded-md p-4">
-                    <p className="text-red-800">
-                        Failed to load weather data. Please try again later.
-                    </p>
-                </div>
-            </div>
-        );
-    }
+        <WeatherGrid forecasts={forecasts} />
+      </div>
+    );
+  } catch (error) {
+    return (
+      <div className="container mx-auto py-8">
+        <h1 className="text-3xl font-bold mb-4">Weather Forecast</h1>
+        <div className="bg-red-50 border border-red-200 rounded-md p-4">
+          <p className="text-red-800">
+            Failed to load weather data. Please try again later.
+          </p>
+        </div>
+      </div>
+    );
+  }
 }
 ```
 
@@ -785,97 +752,93 @@ export default async function WeatherPage() {
 
 **`src/app/weather/interactive/page.tsx`** - Client-side weather dashboard:
 
-```typescript
-'use client';
+```tsx
+"use client";
 
-import { useState, useEffect } from 'react';
-import { weatherApi, WeatherForecast } from '@/lib/api-client';
-import { WeatherGrid } from '@/components/weather/WeatherGrid';
-import { Button } from '@/components/ui/button';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { weatherApi, WeatherForecast } from "@/lib/api-client";
+import { WeatherGrid } from "@/components/weather/WeatherGrid";
+import { Button } from "@/components/ui/button";
+import { Loader2, RefreshCw } from "lucide-react";
 
 export default function InteractiveWeatherPage() {
-    const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-    const loadForecasts = async () => {
-        try {
-            setLoading(true);
-            setError(null);
-            const data = await weatherApi.getWeatherForecast();
-            setForecasts(data);
-            setLastUpdated(new Date());
-        } catch (err) {
-            setError('Failed to load weather data');
-            console.error('Weather API error:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const loadForecasts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await weatherApi.getWeatherForecast();
+      setForecasts(data);
+      setLastUpdated(new Date());
+    } catch (err) {
+      setError("Failed to load weather data");
+      console.error("Weather API error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    // Load data on component mount
-    useEffect(() => {
-        loadForecasts();
-    }, []);
+  // Load data on component mount
+  useEffect(() => {
+    loadForecasts();
+  }, []);
 
-    // Auto-refresh every 5 minutes
-    useEffect(() => {
-        const interval = setInterval(loadForecasts, 5 * 60 * 1000);
-        return () => clearInterval(interval);
-    }, []);
+  // Auto-refresh every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(loadForecasts, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-    return (
-        <div className="container mx-auto py-8">
-            <div className="flex justify-between items-center mb-8">
-                <div>
-                    <h1 className="text-3xl font-bold">Interactive Weather Dashboard</h1>
-                    {lastUpdated && (
-                        <p className="text-sm text-gray-500 mt-1">
-                            Last updated: {lastUpdated.toLocaleTimeString()}
-                        </p>
-                    )}
-                </div>
-
-                <Button
-                    onClick={loadForecasts}
-                    disabled={loading}
-                    variant="outline"
-                >
-                    {loading ? (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    ) : (
-                        <RefreshCw className="mr-2 h-4 w-4" />
-                    )}
-                    Refresh
-                </Button>
-            </div>
-
-            {error && (
-                <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
-                    <p className="text-red-800">{error}</p>
-                    <Button
-                        onClick={loadForecasts}
-                        variant="outline"
-                        size="sm"
-                        className="mt-2"
-                    >
-                        Try Again
-                    </Button>
-                </div>
-            )}
-
-            {loading && forecasts.length === 0 ? (
-                <div className="flex justify-center items-center py-8">
-                    <Loader2 className="h-8 w-8 animate-spin" />
-                    <span className="ml-2">Loading weather data...</span>
-                </div>
-            ) : (
-                <WeatherGrid forecasts={forecasts} />
-            )}
+  return (
+    <div className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold">Interactive Weather Dashboard</h1>
+          {lastUpdated && (
+            <p className="text-sm text-gray-500 mt-1">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </p>
+          )}
         </div>
-    );
+
+        <Button onClick={loadForecasts} disabled={loading} variant="outline">
+          {loading ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCw className="mr-2 h-4 w-4" />
+          )}
+          Refresh
+        </Button>
+      </div>
+
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
+          <p className="text-red-800">{error}</p>
+          <Button
+            onClick={loadForecasts}
+            variant="outline"
+            size="sm"
+            className="mt-2"
+          >
+            Try Again
+          </Button>
+        </div>
+      )}
+
+      {loading && forecasts.length === 0 ? (
+        <div className="flex justify-center items-center py-8">
+          <Loader2 className="h-8 w-8 animate-spin" />
+          <span className="ml-2">Loading weather data...</span>
+        </div>
+      ) : (
+        <WeatherGrid forecasts={forecasts} />
+      )}
+    </div>
+  );
 }
 ```
 
@@ -930,121 +893,110 @@ export type { WeatherForecast } from "api-client";
 
 **`src/components/WeatherCard.tsx`** - Mobile weather card:
 
-```typescript
-import React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-} from 'react-native';
-import { WeatherForecast } from '../lib/api-client';
+```tsx
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { WeatherForecast } from "../lib/api-client";
 
 interface WeatherCardProps {
-    forecast: WeatherForecast;
-    onPress?: () => void;
+  forecast: WeatherForecast;
+  onPress?: () => void;
 }
 
 export function WeatherCard({ forecast, onPress }: WeatherCardProps) {
-    const formatDate = (date?: Date) => {
-        if (!date) return 'Unknown';
-        return new Date(date).toLocaleDateString('en-US', {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric'
-        });
-    };
+  const formatDate = (date?: Date) => {
+    if (!date) return "Unknown";
+    return new Date(date).toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+  };
 
-    const getTemperatureColor = (temp?: number) => {
-        if (!temp) return '#666';
-        if (temp < 0) return '#2563eb';
-        if (temp < 15) return '#3b82f6';
-        if (temp < 25) return '#10b981';
-        return '#ef4444';
-    };
+  const getTemperatureColor = (temp?: number) => {
+    if (!temp) return "#666";
+    if (temp < 0) return "#2563eb";
+    if (temp < 15) return "#3b82f6";
+    if (temp < 25) return "#10b981";
+    return "#ef4444";
+  };
 
-    return (
-        <TouchableOpacity
-            style={styles.card}
-            onPress={onPress}
-            activeOpacity={0.7}
+  return (
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
+      <View style={styles.header}>
+        <Text style={styles.date}>{formatDate(forecast.date)}</Text>
+        <View style={styles.summaryBadge}>
+          <Text style={styles.summaryText}>
+            {forecast.summary || "Unknown"}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.temperatureContainer}>
+        <Text
+          style={[
+            styles.temperatureC,
+            { color: getTemperatureColor(forecast.temperatureC) },
+          ]}
         >
-            <View style={styles.header}>
-                <Text style={styles.date}>{formatDate(forecast.date)}</Text>
-                <View style={styles.summaryBadge}>
-                    <Text style={styles.summaryText}>
-                        {forecast.summary || 'Unknown'}
-                    </Text>
-                </View>
-            </View>
-
-            <View style={styles.temperatureContainer}>
-                <Text
-                    style={[
-                        styles.temperatureC,
-                        { color: getTemperatureColor(forecast.temperatureC) }
-                    ]}
-                >
-                    {forecast.temperatureC}°C
-                </Text>
-                <Text style={styles.temperatureF}>
-                    {forecast.temperatureF}°F
-                </Text>
-            </View>
-        </TouchableOpacity>
-    );
+          {forecast.temperatureC}°C
+        </Text>
+        <Text style={styles.temperatureF}>{forecast.temperatureF}°F</Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 12,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3.84,
-        elevation: 5,
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 12,
-    },
-    date: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#333',
-    },
-    summaryBadge: {
-        backgroundColor: '#f3f4f6',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
-    },
-    summaryText: {
-        fontSize: 12,
-        color: '#666',
-        fontWeight: '500',
-    },
-    temperatureContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    temperatureC: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-    temperatureF: {
-        fontSize: 14,
-        color: '#666',
-    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  date: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333",
+  },
+  summaryBadge: {
+    backgroundColor: "#f3f4f6",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  summaryText: {
+    fontSize: 12,
+    color: "#666",
+    fontWeight: "500",
+  },
+  temperatureContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  temperatureC: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  temperatureF: {
+    fontSize: 14,
+    color: "#666",
+  },
 });
 ```
 
@@ -1052,177 +1004,179 @@ const styles = StyleSheet.create({
 
 **`src/screens/WeatherScreen.tsx`** - Main weather screen:
 
-```typescript
-import React, { useEffect, useState } from 'react';
+```tsx
+import React, { useEffect, useState } from "react";
 import {
-    View,
-    Text,
-    FlatList,
-    StyleSheet,
-    SafeAreaView,
-    ActivityIndicator,
-    TouchableOpacity,
-    RefreshControl,
-} from 'react-native';
-import { weatherApi, WeatherForecast } from '../lib/api-client';
-import { WeatherCard } from '../components/WeatherCard';
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
+import { weatherApi, WeatherForecast } from "../lib/api-client";
+import { WeatherCard } from "../components/WeatherCard";
 
 export function WeatherScreen() {
-    const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-    const loadForecasts = async (isRefresh = false) => {
-        try {
-            if (!isRefresh) setLoading(true);
-            setError(null);
+  const loadForecasts = async (isRefresh = false) => {
+    try {
+      if (!isRefresh) setLoading(true);
+      setError(null);
 
-            const data = await weatherApi.getWeatherForecast();
-            setForecasts(data);
-            setLastUpdated(new Date());
-        } catch (err) {
-            setError('Failed to load weather data');
-            console.error('Weather API error:', err);
-        } finally {
-            setLoading(false);
-            setRefreshing(false);
-        }
-    };
+      const data = await weatherApi.getWeatherForecast();
+      setForecasts(data);
+      setLastUpdated(new Date());
+    } catch (err) {
+      setError("Failed to load weather data");
+      console.error("Weather API error:", err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
-    const onRefresh = () => {
-        setRefreshing(true);
-        loadForecasts(true);
-    };
+  const onRefresh = () => {
+    setRefreshing(true);
+    loadForecasts(true);
+  };
 
-    useEffect(() => {
-        loadForecasts();
-    }, []);
+  useEffect(() => {
+    loadForecasts();
+  }, []);
 
-    const renderHeader = () => (
-        <View style={styles.header}>
-            <Text style={styles.title}>Weather Forecast</Text>
-            {lastUpdated && (
-                <Text style={styles.lastUpdated}>
-                    Updated: {lastUpdated.toLocaleTimeString()}
-                </Text>
-            )}
+  const renderHeader = () => (
+    <View style={styles.header}>
+      <Text style={styles.title}>Weather Forecast</Text>
+      {lastUpdated && (
+        <Text style={styles.lastUpdated}>
+          Updated: {lastUpdated.toLocaleTimeString()}
+        </Text>
+      )}
+    </View>
+  );
+
+  const renderForecast = ({ item }: { item: WeatherForecast }) => (
+    <WeatherCard forecast={item} />
+  );
+
+  const renderEmptyComponent = () => {
+    if (loading) {
+      return (
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={styles.loadingText}>Loading weather data...</Text>
         </View>
-    );
+      );
+    }
 
-    const renderForecast = ({ item }: { item: WeatherForecast }) => (
-        <WeatherCard forecast={item} />
-    );
-
-    const renderEmptyComponent = () => {
-        if (loading) {
-            return (
-                <View style={styles.centerContainer}>
-                    <ActivityIndicator size="large" color="#007AFF" />
-                    <Text style={styles.loadingText}>Loading weather data...</Text>
-                </View>
-            );
-        }
-
-        if (error) {
-            return (
-                <View style={styles.centerContainer}>
-                    <Text style={styles.errorText}>{error}</Text>
-                    <TouchableOpacity
-                        style={styles.retryButton}
-                        onPress={() => loadForecasts()}
-                    >
-                        <Text style={styles.retryButtonText}>Try Again</Text>
-                    </TouchableOpacity>
-                </View>
-            );
-        }
-
-        return (
-            <View style={styles.centerContainer}>
-                <Text style={styles.emptyText}>No weather data available</Text>
-            </View>
-        );
-    };
+    if (error) {
+      return (
+        <View style={styles.centerContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => loadForecasts()}
+          >
+            <Text style={styles.retryButtonText}>Try Again</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
 
     return (
-        <SafeAreaView style={styles.container}>
-            <FlatList
-                data={forecasts}
-                renderItem={renderForecast}
-                keyExtractor={(item, index) => item.date?.toString() || index.toString()}
-                ListHeaderComponent={renderHeader}
-                ListEmptyComponent={renderEmptyComponent}
-                contentContainerStyle={styles.content}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                        colors={['#007AFF']}
-                    />
-                }
-                showsVerticalScrollIndicator={false}
-            />
-        </SafeAreaView>
+      <View style={styles.centerContainer}>
+        <Text style={styles.emptyText}>No weather data available</Text>
+      </View>
     );
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={forecasts}
+        renderItem={renderForecast}
+        keyExtractor={(item, index) =>
+          item.date?.toString() || index.toString()
+        }
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={renderEmptyComponent}
+        contentContainerStyle={styles.content}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={["#007AFF"]}
+          />
+        }
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-    },
-    content: {
-        padding: 16,
-    },
-    header: {
-        marginBottom: 20,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: '600',
-        color: '#1a1a1a',
-        marginBottom: 4,
-    },
-    lastUpdated: {
-        fontSize: 14,
-        color: '#666',
-    },
-    centerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        minHeight: 200,
-    },
-    loadingText: {
-        marginTop: 16,
-        fontSize: 16,
-        color: '#666',
-    },
-    errorText: {
-        fontSize: 16,
-        color: '#ff4444',
-        textAlign: 'center',
-        marginBottom: 16,
-    },
-    emptyText: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-    },
-    retryButton: {
-        backgroundColor: '#007AFF',
-        paddingHorizontal: 24,
-        paddingVertical: 12,
-        borderRadius: 8,
-    },
-    retryButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  content: {
+    padding: 16,
+  },
+  header: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "600",
+    color: "#1a1a1a",
+    marginBottom: 4,
+  },
+  lastUpdated: {
+    fontSize: 14,
+    color: "#666",
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    minHeight: 200,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: "#666",
+  },
+  errorText: {
+    fontSize: 16,
+    color: "#ff4444",
+    textAlign: "center",
+    marginBottom: 16,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+  },
+  retryButton: {
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
 });
 ```
 
@@ -1230,29 +1184,29 @@ const styles = StyleSheet.create({
 
 **Update `App.tsx`** to include the weather screen:
 
-```typescript
-import { WeatherScreen } from './src/screens/WeatherScreen';
+```tsx
+import { WeatherScreen } from "./src/screens/WeatherScreen";
 
 // Update the RootStackParamList
 export type RootStackParamList = {
-    Home: undefined;
-    BlogPost: { slug: string };
-    Weather: undefined; // Add this line
-}
+  Home: undefined;
+  BlogPost: { slug: string };
+  Weather: undefined; // Add this line
+};
 
 // In the Stack.Navigator:
 <Stack.Screen
-    name="Weather"
-    component={WeatherScreen}
-    options={{
-        title: 'Weather Forecast',
-    }}
-/>
+  name="Weather"
+  component={WeatherScreen}
+  options={{
+    title: "Weather Forecast",
+  }}
+/>;
 ```
 
 **Update HomeScreen** to navigate to weather:
 
-```typescript
+```tsx
 // Add to HomeScreen.tsx
 import { TouchableOpacity } from 'react-native';
 
@@ -1339,19 +1293,19 @@ export function useWeatherData() {
 
 **Usage in components**:
 
-```typescript
+```tsx
 function WeatherDashboard() {
-    const { forecasts, loading, error, refresh } = useWeatherData();
+  const { forecasts, loading, error, refresh } = useWeatherData();
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-    return (
-        <div>
-            <button onClick={refresh}>Refresh</button>
-            <WeatherGrid forecasts={forecasts} />
-        </div>
-    );
+  return (
+    <div>
+      <button onClick={refresh}>Refresh</button>
+      <WeatherGrid forecasts={forecasts} />
+    </div>
+  );
 }
 ```
 
@@ -1359,57 +1313,59 @@ function WeatherDashboard() {
 
 **`src/components/ErrorBoundary.tsx`**:
 
-```typescript
-'use client';
+```tsx
+"use client";
 
-import React, { Component, ReactNode } from 'react';
+import React, { Component, ReactNode } from "react";
 
 interface Props {
-    children: ReactNode;
-    fallback?: ReactNode;
+  children: ReactNode;
+  fallback?: ReactNode;
 }
 
 interface State {
-    hasError: boolean;
-    error?: Error;
+  hasError: boolean;
+  error?: Error;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = { hasError: false };
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("Error caught by boundary:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        this.props.fallback || (
+          <div className="p-4 border border-red-300 rounded-md bg-red-50">
+            <h2 className="text-lg font-semibold text-red-800">
+              Something went wrong
+            </h2>
+            <p className="text-red-600">
+              {this.state.error?.message || "An unexpected error occurred"}
+            </p>
+            <button
+              onClick={() => this.setState({ hasError: false })}
+              className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Try again
+            </button>
+          </div>
+        )
+      );
     }
 
-    static getDerivedStateFromError(error: Error): State {
-        return { hasError: true, error };
-    }
-
-    componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-        console.error('Error caught by boundary:', error, errorInfo);
-    }
-
-    render() {
-        if (this.state.hasError) {
-            return this.props.fallback || (
-                <div className="p-4 border border-red-300 rounded-md bg-red-50">
-                    <h2 className="text-lg font-semibold text-red-800">
-                        Something went wrong
-                    </h2>
-                    <p className="text-red-600">
-                        {this.state.error?.message || 'An unexpected error occurred'}
-                    </p>
-                    <button
-                        onClick={() => this.setState({ hasError: false })}
-                        className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                    >
-                        Try again
-                    </button>
-                </div>
-            );
-        }
-
-        return this.props.children;
-    }
+    return this.props.children;
+  }
 }
 ```
 
@@ -1417,7 +1373,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
 **React.memo for expensive components**:
 
-```typescript
+```tsx
 import React, { memo } from "react";
 
 export const WeatherCard = memo(function WeatherCard({
@@ -1433,24 +1389,24 @@ export const WeatherCard = memo(function WeatherCard({
 
 **useMemo for expensive calculations**:
 
-```typescript
+```tsx
 function WeatherStats({ forecasts }: { forecasts: WeatherForecast[] }) {
-    const stats = useMemo(() => {
-        const temps = forecasts.map(f => f.temperatureC || 0);
-        return {
-            avg: temps.reduce((a, b) => a + b, 0) / temps.length,
-            max: Math.max(...temps),
-            min: Math.min(...temps),
-        };
-    }, [forecasts]); // Only recalculate when forecasts change
+  const stats = useMemo(() => {
+    const temps = forecasts.map((f) => f.temperatureC || 0);
+    return {
+      avg: temps.reduce((a, b) => a + b, 0) / temps.length,
+      max: Math.max(...temps),
+      min: Math.min(...temps),
+    };
+  }, [forecasts]); // Only recalculate when forecasts change
 
-    return (
-        <div>
-            <p>Average: {stats.avg.toFixed(1)}°C</p>
-            <p>Max: {stats.max}°C</p>
-            <p>Min: {stats.min}°C</p>
-        </div>
-    );
+  return (
+    <div>
+      <p>Average: {stats.avg.toFixed(1)}°C</p>
+      <p>Max: {stats.max}°C</p>
+      <p>Min: {stats.min}°C</p>
+    </div>
+  );
 }
 ```
 
@@ -1519,5 +1475,3 @@ pnpm build
 - [Shadcn/ui Components](https://ui.shadcn.com/)
 
 ---
-
-**Happy coding! 🚀**

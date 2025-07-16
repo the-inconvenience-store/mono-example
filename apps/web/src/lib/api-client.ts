@@ -1,8 +1,8 @@
 import { BlogPostsApi, Configuration } from 'api-client'
-
+import { env } from '@/config/env/client'
 // API Configuration
 const apiConfig = new Configuration({
-    basePath: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5074',
+    basePath: env.NEXT_PUBLIC_API_URL || 'http://localhost:5074',
     headers: {
         'Content-Type': 'application/json',
     },

@@ -51,16 +51,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    // app.UseSwaggerUi(options =>
-    // {
-    //     options.DocumentPath = "/openapi/v1.json";
-    // });
     app.UseSwaggerUi(options =>
     {
         options.DocumentPath = "/swagger/v1/swagger.json";
     });
 
-    // Also enable traditional Swagger UI with XML documentation
+    // Enable Swagger UI with XML documentation
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {

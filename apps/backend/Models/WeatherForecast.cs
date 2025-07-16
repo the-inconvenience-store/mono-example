@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend;
+namespace backend.Models;
 
 /// <summary>
 /// Represents a weather forecast for a specific date
