@@ -9,7 +9,7 @@
         "build": "pnpm run --recursive build",
         "clean": "pnpm run --recursive clean",
         "openapi-generator-cli": "openapi-generator-cli",
-        "generate:api": "openapi-generator-cli generate --generator-key v2.0"
+        "generate:api": "openapi-generator-cli generate --generator-key backend"
     },
     "keywords": [],
     "author": "",

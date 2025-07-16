@@ -4,7 +4,7 @@
   "generator-cli": {
     "version": "7.14.0",
     "generators": {
-      "v2.0": {
+      "backend": {
         "generatorName": "typescript-fetch",
         "output": "#{cwd}/packages/api",
         "inputSpec": "http://localhost:5074/swagger/v1/swagger.json",
