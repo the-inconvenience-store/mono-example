@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from '@/features/blog/utils'
 
-export function BlogPosts() {
-  const allBlogs = getBlogPosts()
+export async function BlogPosts() {
+  const allBlogs = await getBlogPosts()
 
   return (
     <div>

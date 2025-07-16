@@ -1,5 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs-vite";
-
+import { env as t3Env } from "../src/config/env/client"
 const config: StorybookConfig = {
   "stories": [
     "../src/**/*.mdx",
@@ -18,6 +18,10 @@ const config: StorybookConfig = {
   },
   "staticDirs": [
     "../public"
-  ]
+  ],
+  env: (prev) => ({
+    ...prev,
+    ...t3Env
+  })
 };
 export default config;

@@ -1,0 +1,11 @@
+.openapi-generator-ignore
+apis/BlogPostsApi.ts
+apis/WeatherForecastApi.ts
+apis/index.ts
+index.ts
+models/BlogPost.ts
+models/PostMetadata.ts
+models/ProblemDetails.ts
+models/WeatherForecast.ts
+models/index.ts
+runtime.ts

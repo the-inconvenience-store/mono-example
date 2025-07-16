@@ -1,51 +1,23 @@
-import fs from 'fs'
-import path from 'path'
-import { PostMetadata } from '../types'
+import { blogPostsApi, type BlogPost } from '@/lib/api-client'
 
-
-function parseFrontmatter(fileContent: string) {
-  const frontmatterRegex = /---\s*([\s\S]*?)\s*---/
-  const match = frontmatterRegex.exec(fileContent)
-  const frontMatterBlock = match![1]
-  const content = fileContent.replace(frontmatterRegex, '').trim()
-  const frontMatterLines = frontMatterBlock.trim().split('\n')
-  const metadata: Partial<PostMetadata> = {}
-
-  frontMatterLines.forEach((line) => {
-    const [key, ...valueArr] = line.split(': ')
-    let value = valueArr.join(': ').trim()
-    value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof PostMetadata] = value
-  })
-
-  return { metadata: metadata as PostMetadata, content }
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const response = await blogPostsApi.blogPostsGet()
+    return response
+  } catch (error) {
+    console.error('Failed to fetch blog posts:', error)
+    return []
+  }
 }
 
-function getMDXFiles(dir: string) {
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === '.mdx')
-}
-
-function readMDXFile(filePath: string) {
-  const rawContent = fs.readFileSync(filePath, 'utf-8')
-  return parseFrontmatter(rawContent)
-}
-
-function getMDXData(dir: string) {
-  const mdxFiles = getMDXFiles(dir)
-  return mdxFiles.map((file) => {
-    const { metadata, content } = readMDXFile(path.join(dir, file))
-    const slug = path.basename(file, path.extname(file))
-
-    return {
-      metadata,
-      slug,
-      content,
-    }
-  })
-}
-
-export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'src', 'app', 'blog', 'posts'))
+export async function getBlogPost(slug: string): Promise<BlogPost | null> {
+  try {
+    const response = await blogPostsApi.blogPostsSlugGet({ slug })
+    return response
+  } catch (error) {
+    console.error(`Failed to fetch blog post with slug ${slug}:`, error)
+    return null
+  }
 }
 
 export function formatDate(date: string, includeRelative = false) {

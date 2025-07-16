@@ -1,18 +1,20 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from '@/features/blog/components/mdx'
-import { formatDate, getBlogPosts } from '@/features/blog/utils'
+import { formatDate, getBlogPosts, getBlogPost } from '@/features/blog/utils'
 import { baseUrl } from '@/app/sitemap'
 
 export async function generateStaticParams() {
-  const posts = getBlogPosts()
+  const posts = await getBlogPosts()
 
   return posts.map((post) => ({
     slug: post.slug,
   }))
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = getBlogPosts().find(async (post) => post.slug === (await params).slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = await getBlogPost(slug)
+
   if (!post) {
     return
   }
@@ -51,8 +53,9 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   }
 }
 
-export default function Blog({ params }: { params: { slug: string } }) {
-  const post = getBlogPosts().find(async (post) => post.slug === (await params).slug)
+export default async function Blog({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = await getBlogPost(slug)
 
   if (!post) {
     notFound()
