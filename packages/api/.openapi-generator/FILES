@@ -1,0 +1,16 @@
+.gitignore
+.npmignore
+README.md
+package.json
+src/apis/BlogPostsApi.ts
+src/apis/WeatherApi.ts
+src/apis/index.ts
+src/index.ts
+src/models/BlogPost.ts
+src/models/PostMetadata.ts
+src/models/ProblemDetails.ts
+src/models/WeatherForecast.ts
+src/models/index.ts
+src/runtime.ts
+tsconfig.esm.json
+tsconfig.json

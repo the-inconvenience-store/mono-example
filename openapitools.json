@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.14.0",
+    "generators": {
+      "v2.0": {
+        "generatorName": "typescript-fetch",
+        "output": "#{cwd}/packages/api",
+        "inputSpec": "http://localhost:5074/swagger/v1/swagger.json",
+        "additionalProperties": {
+          "npmName": "@mono/api",
+          "description": "Typescript fetch API client for the mono-example stack",
+          "author": "Sam!",
+          "supportsES6": "true",
+          "withInterfaces": true,
+          "version": "1.0.0"
+        }
+      }
+    }
+  }
+}

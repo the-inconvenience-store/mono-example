@@ -16,7 +16,7 @@ builder.Services.AddOpenApi(options =>
         document.Info = new()
         {
             Title = "Blog API",
-            Version = "v1",
+            Version = "1.0.0",
             Description = "API for managing blog posts with MDX content parsing"
         };
         return Task.CompletedTask;
@@ -40,7 +40,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new()
     {
         Title = "Blog API",
-        Version = "v1",
+        Version = "1.0.0",
         Description = "API for managing blog posts with MDX content parsing"
     });
 });

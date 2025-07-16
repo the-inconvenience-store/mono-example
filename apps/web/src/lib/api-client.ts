@@ -1,4 +1,4 @@
-import { BlogPostsApi, Configuration } from 'api-client'
+import { BlogPostsApi, Configuration } from '@mono/api'
 import { env } from '@/config/env/client'
 // API Configuration
 const apiConfig = new Configuration({
