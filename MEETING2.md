@@ -228,6 +228,13 @@ interface WeatherCardProps {
 }
 
 export function WeatherCard({ forecast }: WeatherCardProps) {
+  const getTemperatureColor = (temp?: number) => {
+    if (!temp) return "text-gray-500";
+    if (temp < 0) return "text-blue-600";
+    if (temp < 15) return "text-blue-400";
+    if (temp < 25) return "text-green-500";
+    return "text-red-500";
+  };
   return (
     <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
       <h3 className="text-lg font-semibold mb-2 text-gray-800">
@@ -237,7 +244,9 @@ export function WeatherCard({ forecast }: WeatherCardProps) {
           day: "numeric",
         })}
       </h3>
-      <div className="text-3xl font-bold text-blue-600 mb-2">
+      <div
+        className={`text-3xl font-bold ${getTemperatureColor(forecast.temperatureC)}`}
+      >
         {forecast.temperatureC}°C
       </div>
       {forecast.temperatureF && (
@@ -276,7 +285,7 @@ Create `src/app/weather/page.tsx`:
 
 ```tsx
 import { weatherApi } from "@/lib/api-client";
-import { WeatherGrid } from "@/components/weather/WeatherGrid";
+import { WeatherGrid } from "@/features/weather/components/WeatherGrid";
 
 // This is metadata for the page
 export const metadata = {
@@ -345,7 +354,7 @@ Create `src/app/weather/interactive/page.tsx`:
 
 import { useState, useEffect } from "react";
 import { weatherApi, WeatherForecast } from "@/lib/api-client";
-import { WeatherGrid } from "@/components/weather/WeatherGrid";
+import { WeatherGrid } from "@/features/weather/components/WeatherGrid";
 import { Button } from "@/components/ui/button";
 import { Loader2, RefreshCw } from "lucide-react";
 
