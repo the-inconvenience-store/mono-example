@@ -14,31 +14,31 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Represents a weather forecast for a specific date
  * @export
  * @interface WeatherForecast
  */
 export interface WeatherForecast {
     /**
-     * 
+     * The date for this weather forecast
      * @type {Date}
      * @memberof WeatherForecast
      */
     date: Date;
     /**
-     * 
+     * Temperature in Celsius
      * @type {number}
      * @memberof WeatherForecast
      */
     temperatureC: number;
     /**
-     * 
+     * Temperature in Fahrenheit (automatically calculated from Celsius)
      * @type {number}
      * @memberof WeatherForecast
      */
-    temperatureF?: number;
+    readonly temperatureF?: number;
     /**
-     * 
+     * Brief description of the weather conditions
      * @type {string}
      * @memberof WeatherForecast
      */
@@ -75,7 +75,7 @@ export function WeatherForecastToJSON(json: any): WeatherForecast {
     return WeatherForecastToJSONTyped(json, false);
 }
 
-export function WeatherForecastToJSONTyped(value?: WeatherForecast | null, ignoreDiscriminator: boolean = false): any {
+export function WeatherForecastToJSONTyped(value?: Omit<WeatherForecast, 'temperatureF'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
@@ -84,7 +84,6 @@ export function WeatherForecastToJSONTyped(value?: WeatherForecast | null, ignor
         
         'date': ((value['date']).toISOString().substring(0,10)),
         'temperatureC': value['temperatureC'],
-        'temperatureF': value['temperatureF'],
         'summary': value['summary'],
     };
 }

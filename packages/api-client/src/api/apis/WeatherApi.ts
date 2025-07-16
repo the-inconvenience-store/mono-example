@@ -31,8 +31,8 @@ import {
 export class WeatherApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves weather forecast data for the next 5 days with randomly generated temperatures and weather conditions
-     * Get 5-day weather forecast
+     * Returns an array of weather forecasts for the next 5 days starting from tomorrow.  Each forecast includes date, temperature in Celsius and Fahrenheit, and a weather summary.    Sample response:  ```json  [    {      \"date\": \"2024-01-16\",      \"temperatureC\": 15,      \"temperatureF\": 59,      \"summary\": \"Mild\"    }  ]  ```
+     * Gets a 5-day weather forecast with random temperature data
      */
     async getWeatherForecastRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<WeatherForecast>>> {
         const queryParameters: any = {};
@@ -53,8 +53,8 @@ export class WeatherApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves weather forecast data for the next 5 days with randomly generated temperatures and weather conditions
-     * Get 5-day weather forecast
+     * Returns an array of weather forecasts for the next 5 days starting from tomorrow.  Each forecast includes date, temperature in Celsius and Fahrenheit, and a weather summary.    Sample response:  ```json  [    {      \"date\": \"2024-01-16\",      \"temperatureC\": 15,      \"temperatureF\": 59,      \"summary\": \"Mild\"    }  ]  ```
+     * Gets a 5-day weather forecast with random temperature data
      */
     async getWeatherForecast(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<WeatherForecast>> {
         const response = await this.getWeatherForecastRaw(initOverrides);

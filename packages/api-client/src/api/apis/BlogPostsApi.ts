@@ -35,8 +35,8 @@ export interface GetBlogPostBySlugRequest {
 export class BlogPostsApi extends runtime.BaseAPI {
 
     /**
-     * Retrieves all available blog posts with their metadata and full content from MDX files
-     * Get all blog posts
+     * Retrieves a complete list of all available blog posts including their metadata and full content.  Posts are returned with their original publication order and include:  - Metadata (title, publication date, summary, optional image)  - URL-friendly slug  - Full MDX content    Sample response:  ```json  [    {      \"metadata\": {        \"title\": \"Getting Started with React\",        \"publishedAt\": \"2024-01-15\",        \"summary\": \"Learn the basics of React development\",        \"image\": \"react-intro.jpg\"      },      \"slug\": \"getting-started-with-react\",      \"content\": \"# Getting Started with React\\n\\nReact is a...\"    }  ]  ```
+     * Gets all blog posts with their metadata and content
      */
     async getAllBlogPostsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BlogPost>>> {
         const queryParameters: any = {};
@@ -57,8 +57,8 @@ export class BlogPostsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves all available blog posts with their metadata and full content from MDX files
-     * Get all blog posts
+     * Retrieves a complete list of all available blog posts including their metadata and full content.  Posts are returned with their original publication order and include:  - Metadata (title, publication date, summary, optional image)  - URL-friendly slug  - Full MDX content    Sample response:  ```json  [    {      \"metadata\": {        \"title\": \"Getting Started with React\",        \"publishedAt\": \"2024-01-15\",        \"summary\": \"Learn the basics of React development\",        \"image\": \"react-intro.jpg\"      },      \"slug\": \"getting-started-with-react\",      \"content\": \"# Getting Started with React\\n\\nReact is a...\"    }  ]  ```
+     * Gets all blog posts with their metadata and content
      */
     async getAllBlogPosts(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BlogPost>> {
         const response = await this.getAllBlogPostsRaw(initOverrides);
@@ -66,8 +66,8 @@ export class BlogPostsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific blog post using its URL-friendly slug identifier
-     * Get blog post by slug
+     * Retrieves a single blog post using its URL-friendly slug identifier.  The slug is derived from the original filename and is used for SEO-friendly URLs.    Example slugs:  - \"getting-started-with-react\"  - \"advanced-typescript-patterns\"  - \"nextjs-best-practices\"    Sample response:  ```json  {    \"metadata\": {      \"title\": \"Getting Started with React\",      \"publishedAt\": \"2024-01-15\",      \"summary\": \"Learn the basics of React development\",      \"image\": \"react-intro.jpg\"    },    \"slug\": \"getting-started-with-react\",    \"content\": \"# Getting Started with React\\n\\nReact is a...\"  }  ```
+     * Gets a specific blog post by its URL slug
      */
     async getBlogPostBySlugRaw(requestParameters: GetBlogPostBySlugRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogPost>> {
         if (requestParameters['slug'] == null) {
@@ -96,8 +96,8 @@ export class BlogPostsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves a specific blog post using its URL-friendly slug identifier
-     * Get blog post by slug
+     * Retrieves a single blog post using its URL-friendly slug identifier.  The slug is derived from the original filename and is used for SEO-friendly URLs.    Example slugs:  - \"getting-started-with-react\"  - \"advanced-typescript-patterns\"  - \"nextjs-best-practices\"    Sample response:  ```json  {    \"metadata\": {      \"title\": \"Getting Started with React\",      \"publishedAt\": \"2024-01-15\",      \"summary\": \"Learn the basics of React development\",      \"image\": \"react-intro.jpg\"    },    \"slug\": \"getting-started-with-react\",    \"content\": \"# Getting Started with React\\n\\nReact is a...\"  }  ```
+     * Gets a specific blog post by its URL slug
      */
     async getBlogPostBySlug(requestParameters: GetBlogPostBySlugRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogPost> {
         const response = await this.getBlogPostBySlugRaw(requestParameters, initOverrides);

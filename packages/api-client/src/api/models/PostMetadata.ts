@@ -14,31 +14,31 @@
 
 import { mapValues } from '../runtime';
 /**
- * 
+ * Represents metadata for a blog post extracted from MDX frontmatter
  * @export
  * @interface PostMetadata
  */
 export interface PostMetadata {
     /**
-     * 
+     * The title of the blog post
      * @type {string}
      * @memberof PostMetadata
      */
     title: string;
     /**
-     * 
+     * The publication date of the blog post in ISO format (YYYY-MM-DD)
      * @type {string}
      * @memberof PostMetadata
      */
     publishedAt: string;
     /**
-     * 
+     * A brief summary of the blog post content
      * @type {string}
      * @memberof PostMetadata
      */
     summary: string;
     /**
-     * 
+     * Optional featured image URL for the blog post
      * @type {string}
      * @memberof PostMetadata
      */

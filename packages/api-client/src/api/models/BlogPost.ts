@@ -22,7 +22,7 @@ import {
 } from './PostMetadata';
 
 /**
- * 
+ * Represents a complete blog post with metadata, content, and slug
  * @export
  * @interface BlogPost
  */
@@ -34,13 +34,13 @@ export interface BlogPost {
      */
     metadata: PostMetadata;
     /**
-     * 
+     * The URL-friendly slug derived from the filename
      * @type {string}
      * @memberof BlogPost
      */
     slug: string;
     /**
-     * 
+     * The main content of the blog post (MDX content without frontmatter)
      * @type {string}
      * @memberof BlogPost
      */

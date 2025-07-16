@@ -19,6 +19,7 @@ import { mapValues } from '../runtime';
  * @interface ProblemDetails
  */
 export interface ProblemDetails {
+    [key: string]: any | any;
     /**
      * 
      * @type {string}
@@ -68,6 +69,7 @@ export function ProblemDetailsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
+            ...json,
         'type': json['type'] == null ? undefined : json['type'],
         'title': json['title'] == null ? undefined : json['title'],
         'status': json['status'] == null ? undefined : json['status'],
@@ -87,6 +89,7 @@ export function ProblemDetailsToJSONTyped(value?: ProblemDetails | null, ignoreD
 
     return {
         
+            ...value,
         'type': value['type'],
         'title': value['title'],
         'status': value['status'],
