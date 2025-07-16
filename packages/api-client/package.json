@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "openapi-generator-cli": "openapi-generator-cli",
-    "openapi:generate": "openapi-generator-cli generate -i v1.json --generator-name typescript-fetch -o src/api"
+    "openapi:generate": "openapi-generator-cli generate -i http://localhost:5074/openapi/v1.json --generator-name typescript-fetch -o src/api"
   },
   "keywords": [],
   "author": "",
