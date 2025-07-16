@@ -25,7 +25,7 @@ import {
     ProblemDetailsToJSON,
 } from '../models/index';
 
-export interface BlogPostsSlugGetRequest {
+export interface GetBlogPostBySlugRequest {
     slug: string;
 }
 
@@ -35,8 +35,10 @@ export interface BlogPostsSlugGetRequest {
 export class BlogPostsApi extends runtime.BaseAPI {
 
     /**
+     * Retrieves all available blog posts with their metadata and full content from MDX files
+     * Get all blog posts
      */
-    async blogPostsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BlogPost>>> {
+    async getAllBlogPostsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<BlogPost>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -55,19 +57,23 @@ export class BlogPostsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Retrieves all available blog posts with their metadata and full content from MDX files
+     * Get all blog posts
      */
-    async blogPostsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BlogPost>> {
-        const response = await this.blogPostsGetRaw(initOverrides);
+    async getAllBlogPosts(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<BlogPost>> {
+        const response = await this.getAllBlogPostsRaw(initOverrides);
         return await response.value();
     }
 
     /**
+     * Retrieves a specific blog post using its URL-friendly slug identifier
+     * Get blog post by slug
      */
-    async blogPostsSlugGetRaw(requestParameters: BlogPostsSlugGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogPost>> {
+    async getBlogPostBySlugRaw(requestParameters: GetBlogPostBySlugRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlogPost>> {
         if (requestParameters['slug'] == null) {
             throw new runtime.RequiredError(
                 'slug',
-                'Required parameter "slug" was null or undefined when calling blogPostsSlugGet().'
+                'Required parameter "slug" was null or undefined when calling getBlogPostBySlug().'
             );
         }
 
@@ -90,9 +96,11 @@ export class BlogPostsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Retrieves a specific blog post using its URL-friendly slug identifier
+     * Get blog post by slug
      */
-    async blogPostsSlugGet(requestParameters: BlogPostsSlugGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogPost> {
-        const response = await this.blogPostsSlugGetRaw(requestParameters, initOverrides);
+    async getBlogPostBySlug(requestParameters: GetBlogPostBySlugRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlogPost> {
+        const response = await this.getBlogPostBySlugRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

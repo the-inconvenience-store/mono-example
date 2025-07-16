@@ -1,5 +1,5 @@
 apis/BlogPostsApi.ts
-apis/WeatherForecastApi.ts
+apis/WeatherApi.ts
 apis/index.ts
 index.ts
 models/BlogPost.ts

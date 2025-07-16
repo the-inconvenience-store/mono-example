@@ -24,13 +24,13 @@ export interface WeatherForecast {
      * @type {Date}
      * @memberof WeatherForecast
      */
-    date?: Date;
+    date: Date;
     /**
      * 
      * @type {number}
      * @memberof WeatherForecast
      */
-    temperatureC?: number;
+    temperatureC: number;
     /**
      * 
      * @type {number}
@@ -49,6 +49,8 @@ export interface WeatherForecast {
  * Check if a given object implements the WeatherForecast interface.
  */
 export function instanceOfWeatherForecast(value: object): value is WeatherForecast {
+    if (!('date' in value) || value['date'] === undefined) return false;
+    if (!('temperatureC' in value) || value['temperatureC'] === undefined) return false;
     return true;
 }
 
@@ -62,8 +64,8 @@ export function WeatherForecastFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'date': json['date'] == null ? undefined : (new Date(json['date'])),
-        'temperatureC': json['temperatureC'] == null ? undefined : json['temperatureC'],
+        'date': (new Date(json['date'])),
+        'temperatureC': json['temperatureC'],
         'temperatureF': json['temperatureF'] == null ? undefined : json['temperatureF'],
         'summary': json['summary'] == null ? undefined : json['summary'],
     };
@@ -80,7 +82,7 @@ export function WeatherForecastToJSONTyped(value?: WeatherForecast | null, ignor
 
     return {
         
-        'date': value['date'] == null ? undefined : ((value['date']).toISOString().substring(0,10)),
+        'date': ((value['date']).toISOString().substring(0,10)),
         'temperatureC': value['temperatureC'],
         'temperatureF': value['temperatureF'],
         'summary': value['summary'],

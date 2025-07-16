@@ -1,15 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Controllers;
 
 /// <summary>
 /// Controller for managing blog posts and related operations
 /// </summary>
+/// <remarks>
+/// This controller provides endpoints for retrieving blog posts that are parsed from MDX files.
+/// All blog posts include metadata (title, publication date, summary) and full content.
+/// </remarks>
 [ApiController]
 [Route("[controller]")]
 [Produces("application/json")]
+[Tags("Blog Posts")]
 public class BlogPostsController : ControllerBase
 {
     private readonly IBlogService _blogService;
@@ -24,12 +30,37 @@ public class BlogPostsController : ControllerBase
     /// <summary>
     /// Gets all blog posts with their metadata and content
     /// </summary>
-    /// <returns>A collection of blog posts</returns>
-    /// <response code="200">Returns the list of blog posts</response>
-    /// <response code="500">If there was an internal server error</response>
-    [HttpGet]
+    /// <remarks>
+    /// Retrieves a complete list of all available blog posts including their metadata and full content.
+    /// Posts are returned with their original publication order and include:
+    /// - Metadata (title, publication date, summary, optional image)
+    /// - URL-friendly slug
+    /// - Full MDX content
+    /// 
+    /// Sample response:
+    /// ```json
+    /// [
+    ///   {
+    ///     "metadata": {
+    ///       "title": "Getting Started with React",
+    ///       "publishedAt": "2024-01-15",
+    ///       "summary": "Learn the basics of React development",
+    ///       "image": "react-intro.jpg"
+    ///     },
+    ///     "slug": "getting-started-with-react",
+    ///     "content": "# Getting Started with React\n\nReact is a..."
+    ///   }
+    /// ]
+    /// ```
+    /// </remarks>
+    /// <returns>A collection of all blog posts with metadata and content</returns>
+    /// <response code="200">Returns the list of blog posts successfully</response>
+    /// <response code="500">If there was an internal server error retrieving posts</response>
+    [HttpGet(Name = "GetAllBlogPosts")]
     [ProducesResponseType(typeof(IEnumerable<BlogPost>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [EndpointSummary("Get all blog posts")]
+    [EndpointDescription("Retrieves all available blog posts with their metadata and full content from MDX files")]
     public async Task<ActionResult<IEnumerable<BlogPost>>> GetBlogPosts()
     {
         try
@@ -49,18 +80,49 @@ public class BlogPostsController : ControllerBase
     }
 
     /// <summary>
-    /// Gets a specific blog post by its slug
+    /// Gets a specific blog post by its URL slug
     /// </summary>
-    /// <param name="slug">The URL-friendly slug of the blog post</param>
+    /// <remarks>
+    /// Retrieves a single blog post using its URL-friendly slug identifier.
+    /// The slug is derived from the original filename and is used for SEO-friendly URLs.
+    /// 
+    /// Example slugs:
+    /// - "getting-started-with-react"
+    /// - "advanced-typescript-patterns"
+    /// - "nextjs-best-practices"
+    /// 
+    /// Sample response:
+    /// ```json
+    /// {
+    ///   "metadata": {
+    ///     "title": "Getting Started with React",
+    ///     "publishedAt": "2024-01-15",
+    ///     "summary": "Learn the basics of React development",
+    ///     "image": "react-intro.jpg"
+    ///   },
+    ///   "slug": "getting-started-with-react",
+    ///   "content": "# Getting Started with React\n\nReact is a..."
+    /// }
+    /// ```
+    /// </remarks>
+    /// <param name="slug">The URL-friendly slug identifier for the blog post (e.g., "getting-started-with-react")</param>
     /// <returns>The blog post with the specified slug</returns>
-    /// <response code="200">Returns the blog post</response>
-    /// <response code="404">If the blog post is not found</response>
-    /// <response code="500">If there was an internal server error</response>
-    [HttpGet("{slug}")]
+    /// <response code="200">Returns the blog post successfully</response>
+    /// <response code="404">If no blog post exists with the specified slug</response>
+    /// <response code="500">If there was an internal server error retrieving the post</response>
+    [HttpGet("{slug}", Name = "GetBlogPostBySlug")]
     [ProducesResponseType(typeof(BlogPost), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<BlogPost>> GetBlogPost(string slug)
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [EndpointSummary("Get blog post by slug")]
+    [EndpointDescription("Retrieves a specific blog post using its URL-friendly slug identifier")]
+    public async Task<ActionResult<BlogPost>> GetBlogPost(
+        [FromRoute]
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
+        [RegularExpression(@"^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            ErrorMessage = "Slug must contain only lowercase letters, numbers, and hyphens")]
+        string slug)
     {
         try
         {
