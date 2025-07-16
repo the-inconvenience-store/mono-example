@@ -2,7 +2,7 @@ import { blogPostsApi, type BlogPost } from '@/lib/api-client'
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   try {
-    const response = await blogPostsApi.blogPostsGet()
+    const response = await blogPostsApi.getAllBlogPosts()
     return response
   } catch (error) {
     console.error('Failed to fetch blog posts:', error)
@@ -12,7 +12,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
-    const response = await blogPostsApi.blogPostsSlugGet({ slug })
+    const response = await blogPostsApi.getBlogPostBySlug({ slug })
     return response
   } catch (error) {
     console.error(`Failed to fetch blog post with slug ${slug}:`, error)
