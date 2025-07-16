@@ -1,8 +1,12 @@
 import { ImageResponse } from 'next/og'
+import { env } from '@/config/env/server'
 
 export function GET(request: Request) {
   const url = new URL(request.url)
   const title = url.searchParams.get('title') || 'Next.js Portfolio Starter'
+
+  // t3 server env var example
+  console.log(env.DATABASE_URL)
 
   return new ImageResponse(
     (
