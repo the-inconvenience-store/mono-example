@@ -52,18 +52,6 @@
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
-  }
-  html {
-    color-scheme: dark;
-  }
-}
-
 html {
   min-width: 360px;
 }
@@ -91,7 +79,7 @@ html {
   content: '#';
 }
 
-.prose *:hover > .anchor {
+.prose *:hover>.anchor {
   @apply visible;
 }
 
@@ -150,7 +138,7 @@ html {
   @apply list-decimal pl-6;
 }
 
-.prose > :first-child {
+.prose> :first-child {
   /* Override removing top margin, causing layout shift */
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
@@ -161,8 +149,10 @@ pre::-webkit-scrollbar {
 }
 
 pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Remove Safari input shadow on mobile */
@@ -254,12 +244,17 @@ table {
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+  --sh-class: #4c97f8;
+  --sh-identifier: white;
+  --sh-keyword: #f47067;
+  --sh-string: #0fa295;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
