@@ -9,19 +9,19 @@ builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi(options =>
-{
-    options.AddDocumentTransformer((document, context, cancellationToken) =>
-    {
-        document.Info = new()
-        {
-            Title = "Blog API",
-            Version = "1.0.0",
-            Description = "API for managing blog posts with MDX content parsing"
-        };
-        return Task.CompletedTask;
-    });
-});
+// builder.Services.AddOpenApi(options =>
+// {
+//     options.AddDocumentTransformer((document, context, cancellationToken) =>
+//     {
+//         document.Info = new()
+//         {
+//             Title = "Blog API",
+//             Version = "1.0.0",
+//             Description = "API for managing blog posts with MDX content parsing"
+//         };
+//         return Task.CompletedTask;
+//     });
+// });
 
 // Add Swagger services with XML documentation support
 builder.Services.AddSwaggerGen(options =>
@@ -51,13 +51,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUi(options =>
-    {
-        options.DocumentPath = "/swagger/v1/swagger.json";
-    });
+    // app.UseSwaggerUi(options =>
+    // {
+    //     options.DocumentPath = "/swagger/v1/swagger.json";
+    // });
 
-    // Enable Swagger UI with XML documentation
     app.UseSwagger();
+    // Enable Swagger UI with XML documentation
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Blog API v1");
