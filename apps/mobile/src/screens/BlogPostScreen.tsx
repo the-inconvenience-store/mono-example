@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import {
     ScrollView,
     Text,
@@ -23,11 +23,7 @@ export function BlogPostScreen() {
     const navigation = useNavigation()
     const { slug } = route.params
 
-    useEffect(() => {
-        loadBlogPost()
-    }, [slug])
-
-    const loadBlogPost = async () => {
+    const loadBlogPost = useCallback(async () => {
         try {
             setLoading(true)
             setError(null)
@@ -47,7 +43,11 @@ export function BlogPostScreen() {
         } finally {
             setLoading(false)
         }
-    }
+    }, [navigation, slug])
+
+    useEffect(() => {
+        loadBlogPost()
+    }, [slug, loadBlogPost])
 
     if (loading) {
         return (
