@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "outDir": "dist",
+        "rootDir": "src",
+        "declaration": true,
+        "jsx": "react-jsx"
+    },
+    "include": [
+        "src"
+    ]
+}

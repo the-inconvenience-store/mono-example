@@ -13,6 +13,7 @@
     "react": "19.1.0",
     "react-native": "0.80.1",
     "@mono/api": "workspace:*",
+    "@mono/hooks": "workspace:*",
     "@react-native/new-app-screen": "0.80.1",
     "@babel/runtime": "^7.25.0",
     "@react-navigation/native": "7.1.14",
