@@ -6,7 +6,13 @@ const navItems = {
   },
   '/blog': {
     name: 'blog',
-  }
+  },
+  '/weather': {
+    name: 'weather'
+  },
+  '/weather/interactive': {
+    name: 'i_weather'
+  },
 }
 
 export function Navbar() {

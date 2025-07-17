@@ -12,6 +12,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { HomeScreen } from './src/screens/HomeScreen'
 import { BlogPostScreen } from './src/screens/BlogPostScreen'
 import { RootStackParamList } from './src/types'
+import { WeatherScreen } from './src/screens/WeatherScreen'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -45,6 +46,13 @@ function App() {
             options={{
               title: 'Blog Post',
               headerBackTitle: 'Back',
+            }}
+          />
+          <Stack.Screen
+            name="Weather"
+            component={WeatherScreen}
+            options={{
+              title: "Weather Forecast",
             }}
           />
         </Stack.Navigator>

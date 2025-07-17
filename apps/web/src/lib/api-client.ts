@@ -1,4 +1,4 @@
-import { BlogPostsApi, Configuration } from '@mono/api'
+import { BlogPostsApi, Configuration, WeatherApi } from '@mono/api'
 import { env } from '@/config/env/client'
 // API Configuration
 const apiConfig = new Configuration({
@@ -10,6 +10,6 @@ const apiConfig = new Configuration({
 
 // API Client instances
 export const blogPostsApi = new BlogPostsApi(apiConfig)
-
+export const weatherApi = new WeatherApi(apiConfig)
 // Type exports for convenience
-export type { BlogPost, PostMetadata } from '@mono/api'
+export type { BlogPost, PostMetadata, WeatherForecast } from '@mono/api'

@@ -63,12 +63,12 @@ export function HomeScreen() {
                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
             </Text>
-            {/* <TouchableOpacity
+            <TouchableOpacity
                 style={styles.weatherButton}
                 onPress={() => navigation.navigate('Weather')}
             >
                 <Text style={styles.weatherButtonText}>View Weather</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <Text style={styles.sectionTitle}>Latest Blog Posts</Text>
         </View>
     )
