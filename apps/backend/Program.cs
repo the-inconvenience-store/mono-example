@@ -2,7 +2,7 @@ using backend.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var origins = "_origins";
 // Add services to the container.
 builder.Services.AddScoped<IBlogService, BlogService>();
 
@@ -22,6 +22,18 @@ builder.Services.AddControllers();
 //         return Task.CompletedTask;
 //     });
 // });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: origins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials();
+        });
+});
 
 // Add Swagger services with XML documentation support
 builder.Services.AddSwaggerGen(options =>
@@ -66,6 +78,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(origins);
 
 app.UseAuthorization();
 

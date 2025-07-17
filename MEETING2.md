@@ -228,6 +228,13 @@ interface WeatherCardProps {
 }
 
 export function WeatherCard({ forecast }: WeatherCardProps) {
+  const getTemperatureColor = (temp?: number) => {
+    if (!temp) return "text-gray-500";
+    if (temp < 0) return "text-blue-600";
+    if (temp < 15) return "text-blue-400";
+    if (temp < 25) return "text-green-500";
+    return "text-red-500";
+  };
   return (
     <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
       <h3 className="text-lg font-semibold mb-2 text-gray-800">
@@ -237,7 +244,9 @@ export function WeatherCard({ forecast }: WeatherCardProps) {
           day: "numeric",
         })}
       </h3>
-      <div className="text-3xl font-bold text-blue-600 mb-2">
+      <div
+        className={`text-3xl font-bold ${getTemperatureColor(forecast.temperatureC)}`}
+      >
         {forecast.temperatureC}°C
       </div>
       {forecast.temperatureF && (
@@ -276,7 +285,7 @@ Create `src/app/weather/page.tsx`:
 
 ```tsx
 import { weatherApi } from "@/lib/api-client";
-import { WeatherGrid } from "@/components/weather/WeatherGrid";
+import { WeatherGrid } from "@/features/weather/components/WeatherGrid";
 
 // This is metadata for the page
 export const metadata = {
@@ -345,7 +354,7 @@ Create `src/app/weather/interactive/page.tsx`:
 
 import { useState, useEffect } from "react";
 import { weatherApi, WeatherForecast } from "@/lib/api-client";
-import { WeatherGrid } from "@/components/weather/WeatherGrid";
+import { WeatherGrid } from "@/features/weather/components/WeatherGrid";
 import { Button } from "@/components/ui/button";
 import { Loader2, RefreshCw } from "lucide-react";
 
@@ -972,6 +981,392 @@ export default async function Page() {
     </section>
   );
 }
+```
+
+---
+
+## 10. React Native Implementation
+
+### 🎯 **Presentation Points:**
+
+- Shared API client between web and mobile
+- React Native navigation
+- Platform-specific styling
+- Mobile-optimized components
+
+### **Step 1: API Client Setup** (Already Done)
+
+The mobile app already uses the same API client. Let's examine the configuration:
+
+**`apps/mobile/src/lib/api-client.ts`**:
+
+```typescript
+import "../types/api-polyfills";
+import { WeatherForecastApi, Configuration } from "api-client";
+
+const apiConfig = new Configuration({
+  basePath: __DEV__
+    ? "http://localhost:5074"
+    : "https://your-production-api.com/",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  fetchApi: fetch,
+});
+
+export const weatherApi = new WeatherForecastApi(apiConfig);
+export type { WeatherForecast } from "api-client";
+```
+
+### **Step 2: Create Weather Components**
+
+**`src/components/WeatherCard.tsx`** - Mobile weather card:
+
+```tsx
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { WeatherForecast } from "../lib/api-client";
+
+interface WeatherCardProps {
+  forecast: WeatherForecast;
+  onPress?: () => void;
+}
+
+export function WeatherCard({ forecast, onPress }: WeatherCardProps) {
+  const formatDate = (date?: Date) => {
+    if (!date) return "Unknown";
+    return new Date(date).toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const getTemperatureColor = (temp?: number) => {
+    if (!temp) return "#666";
+    if (temp < 0) return "#2563eb";
+    if (temp < 15) return "#3b82f6";
+    if (temp < 25) return "#10b981";
+    return "#ef4444";
+  };
+
+  return (
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.7}>
+      <View style={styles.header}>
+        <Text style={styles.date}>{formatDate(forecast.date)}</Text>
+        <View style={styles.summaryBadge}>
+          <Text style={styles.summaryText}>
+            {forecast.summary || "Unknown"}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.temperatureContainer}>
+        <Text
+          style={[
+            styles.temperatureC,
+            { color: getTemperatureColor(forecast.temperatureC) },
+          ]}
+        >
+          {forecast.temperatureC}°C
+        </Text>
+        <Text style={styles.temperatureF}>{forecast.temperatureF}°F</Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  date: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333",
+  },
+  summaryBadge: {
+    backgroundColor: "#f3f4f6",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  summaryText: {
+    fontSize: 12,
+    color: "#666",
+    fontWeight: "500",
+  },
+  temperatureContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  temperatureC: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  temperatureF: {
+    fontSize: 14,
+    color: "#666",
+  },
+});
+```
+
+### **Step 3: Weather Screen**
+
+**`src/screens/WeatherScreen.tsx`** - Main weather screen:
+
+```tsx
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
+import { weatherApi, WeatherForecast } from "../lib/api-client";
+import { WeatherCard } from "../components/WeatherCard";
+
+export function WeatherScreen() {
+  const [forecasts, setForecasts] = useState<WeatherForecast[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  const loadForecasts = async (isRefresh = false) => {
+    try {
+      if (!isRefresh) setLoading(true);
+      setError(null);
+
+      const data = await weatherApi.getWeatherForecast();
+      setForecasts(data);
+      setLastUpdated(new Date());
+    } catch (err) {
+      setError("Failed to load weather data");
+      console.error("Weather API error:", err);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    loadForecasts(true);
+  };
+
+  useEffect(() => {
+    loadForecasts();
+  }, []);
+
+  const renderHeader = () => (
+    <View style={styles.header}>
+      <Text style={styles.title}>Weather Forecast</Text>
+      {lastUpdated && (
+        <Text style={styles.lastUpdated}>
+          Updated: {lastUpdated.toLocaleTimeString()}
+        </Text>
+      )}
+    </View>
+  );
+
+  const renderForecast = ({ item }: { item: WeatherForecast }) => (
+    <WeatherCard forecast={item} />
+  );
+
+  const renderEmptyComponent = () => {
+    if (loading) {
+      return (
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" color="#007AFF" />
+          <Text style={styles.loadingText}>Loading weather data...</Text>
+        </View>
+      );
+    }
+
+    if (error) {
+      return (
+        <View style={styles.centerContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => loadForecasts()}
+          >
+            <Text style={styles.retryButtonText}>Try Again</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.centerContainer}>
+        <Text style={styles.emptyText}>No weather data available</Text>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={forecasts}
+        renderItem={renderForecast}
+        keyExtractor={(item, index) =>
+          item.date?.toString() || index.toString()
+        }
+        ListHeaderComponent={renderHeader}
+        ListEmptyComponent={renderEmptyComponent}
+        contentContainerStyle={styles.content}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={["#007AFF"]}
+          />
+        }
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  content: {
+    padding: 16,
+  },
+  header: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "600",
+    color: "#1a1a1a",
+    marginBottom: 4,
+  },
+  lastUpdated: {
+    fontSize: 14,
+    color: "#666",
+  },
+  centerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    minHeight: 200,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: "#666",
+  },
+  errorText: {
+    fontSize: 16,
+    color: "#ff4444",
+    textAlign: "center",
+    marginBottom: 16,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+  },
+  retryButton: {
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+});
+```
+
+### **Step 4: Add to Navigation**
+
+**Update `App.tsx`** to include the weather screen:
+
+```tsx
+import { WeatherScreen } from "./src/screens/WeatherScreen";
+
+// Update the RootStackParamList
+export type RootStackParamList = {
+  Home: undefined;
+  BlogPost: { slug: string };
+  Weather: undefined; // Add this line
+};
+
+// In the Stack.Navigator:
+<Stack.Screen
+  name="Weather"
+  component={WeatherScreen}
+  options={{
+    title: "Weather Forecast",
+  }}
+/>
+()
+```
+
+**Update HomeScreen** to navigate to weather:
+
+```tsx
+// Add to HomeScreen.tsx
+import { TouchableOpacity } from 'react-native';
+
+const renderHeader = () => (
+    <View style={styles.headerContent}>
+        {/* Existing content */}
+
+        <TouchableOpacity
+            style={styles.weatherButton}
+            onPress={() => navigation.navigate('Weather')}
+        >
+            <Text style={styles.weatherButtonText}>View Weather</Text>
+        </TouchableOpacity>
+    </View>
+);
+
+// Add to styles
+weatherButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginVertical: 16,
+},
+weatherButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+},
 ```
 
 ---
