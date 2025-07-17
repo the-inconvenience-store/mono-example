@@ -15,10 +15,10 @@ This monorepo demonstrates modern full-stack development with type-safe communic
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   .NET API      │    │    Next.js      │    │  React Native   │
-│   (Backend)     │◄──►│     (Web)       │    │    (Mobile)     │
+│   (Backend)     │    │     (Web)       │    │    (Mobile)     │
 │                 │    │                 │    │                 │
 │ • ASP.NET Core  │    │ • App Router    │    │ • Navigation    │
-│ • OpenAPI/Swagger│   │ • TailwindCSS   │    │ • Shared Types  │
+│ • OpenAPI       │    │ • TailwindCSS   │    │ • Shared Types  │
 │ • MDX Blog Posts│    │ • Storybook     │    │ • API Client    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
