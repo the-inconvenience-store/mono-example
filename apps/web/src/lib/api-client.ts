@@ -12,4 +12,4 @@ const apiConfig = new Configuration({
 export const blogPostsApi = new BlogPostsApi(apiConfig)
 
 // Type exports for convenience
-export type { BlogPost, PostMetadata } from 'api-client'
+export type { BlogPost, PostMetadata } from '@mono/api'
