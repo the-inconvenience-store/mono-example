@@ -165,7 +165,7 @@ mono-example/
    ```bash
    cd apps/backend
    dotnet restore
-   dotnet run
+   dotnet run --launch-profile http
    ```
 
    Backend will be available at `http://localhost:5074`
@@ -207,7 +207,7 @@ pnpm generate:api  # Generate TypeScript client from OpenAPI spec
 ### **Backend (apps/backend)**
 
 ```bash
-dotnet run         # Start the API server
+dotnet run --launch-profile http         # Start the API server
 dotnet build       # Build the application
 dotnet test        # Run tests
 ```
