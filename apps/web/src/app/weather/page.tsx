@@ -21,12 +21,11 @@ export default async function WeatherPage() {
                 <WeatherGrid forecasts={forecasts} />
             </div>
         );
-    } catch (error) {
+    } catch {
         return (
             <div className="container mx-auto py-8 px-4">
                 <h1 className="text-3xl font-bold mb-4 text-gray-900">
                     Weather Forecast
-
                 </h1>
                 <div className="bg-red-50 border border-red-200 rounded-md p-4">
                     <p className="text-red-800">
