@@ -59,8 +59,6 @@ public class BlogPostsController : ControllerBase
     [HttpGet(Name = "GetAllBlogPosts")]
     [ProducesResponseType(typeof(IEnumerable<BlogPost>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [EndpointSummary("Get all blog posts")]
-    [EndpointDescription("Retrieves all available blog posts with their metadata and full content from MDX files")]
     public async Task<ActionResult<IEnumerable<BlogPost>>> GetBlogPosts()
     {
         try
@@ -114,8 +112,6 @@ public class BlogPostsController : ControllerBase
     [ProducesResponseType(typeof(BlogPost), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [EndpointSummary("Get blog post by slug")]
-    [EndpointDescription("Retrieves a specific blog post using its URL-friendly slug identifier")]
     public async Task<ActionResult<BlogPost>> GetBlogPost(
         [FromRoute]
         [Required]

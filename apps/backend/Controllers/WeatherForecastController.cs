@@ -50,8 +50,6 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     [ProducesResponseType(typeof(IEnumerable<WeatherForecast>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [EndpointSummary("Get 5-day weather forecast")]
-    [EndpointDescription("Retrieves weather forecast data for the next 5 days with randomly generated temperatures and weather conditions")]
     public IEnumerable<WeatherForecast> Get()
     {
         try
