@@ -8,21 +8,6 @@ builder.Services.AddScoped<IBlogService, BlogService>();
 
 builder.Services.AddControllers();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-// builder.Services.AddOpenApi(options =>
-// {
-//     options.AddDocumentTransformer((document, context, cancellationToken) =>
-//     {
-//         document.Info = new()
-//         {
-//             Title = "Blog API",
-//             Version = "1.0.0",
-//             Description = "API for managing blog posts with MDX content parsing"
-//         };
-//         return Task.CompletedTask;
-//     });
-// });
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: origins,
@@ -51,9 +36,9 @@ builder.Services.AddSwaggerGen(options =>
     // Configure API info
     options.SwaggerDoc("v1", new()
     {
-        Title = "Blog API",
+        Title = "Mono API",
         Version = "1.0.0",
-        Description = "API for managing blog posts with MDX content parsing"
+        Description = "API for managing blog posts with MDX content parsing & retrieving the weather forecast"
     });
 });
 
@@ -63,16 +48,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    // app.UseSwaggerUi(options =>
-    // {
-    //     options.DocumentPath = "/swagger/v1/swagger.json";
-    // });
-
     app.UseSwagger();
-    // Enable Swagger UI with XML documentation
+
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Blog API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Mono API v1");
         options.RoutePrefix = "swagger";
     });
 }

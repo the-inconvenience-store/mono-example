@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Blog API
- * API for managing blog posts with MDX content parsing
+ * Mono API
+ * API for managing blog posts with MDX content parsing & retrieving the weather forecast
  *
  * The version of the OpenAPI document: 1.0.0
  * 
