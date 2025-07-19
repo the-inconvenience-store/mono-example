@@ -1,339 +1,85 @@
-# Full-Stack TypeScript Monorepo
+# OpenAPI Generator for the default library
 
-> **Modern development with .NET API, Next.js Web App, and React Native Mobile App sharing generated TypeScript clients**
+## Overview
+This is a boiler-plate project to generate your own project derived from an OpenAPI specification.
+Its goal is to get you started with the basic plumbing so you can put in your own logic.
+It won't work without your changes applied.
 
-[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![Next.js](https://img.shields.io/badge/Next.js-15.4.1-000000?logo=nextjs)](https://nextjs.org/)
-[![React Native](https://img.shields.io/badge/React%20Native-0.80.1-61DAFB?logo=react)](https://reactnative.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![PNPM](https://img.shields.io/badge/PNPM-10.5.0-F69220?logo=pnpm)](https://pnpm.io/)
+## What's OpenAPI
+The goal of OpenAPI is to define a standard, language-agnostic interface to REST APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection.
+When properly described with OpenAPI, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.
+Similar to what interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
 
-## Architecture Overview
+Check out [OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) for additional information about the OpenAPI project, including additional libraries with support for other languages and more.
 
-This monorepo demonstrates modern full-stack development with type-safe communication between platforms:
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   .NET API      │    │    Next.js      │    │  React Native   │
-│   (Backend)     │    │     (Web)       │    │    (Mobile)     │
-│                 │    │                 │    │                 │
-│ • ASP.NET Core  │    │ • App Router    │    │ • Navigation    │
-│ • OpenAPI       │    │ • TailwindCSS   │    │ • Shared Types  │
-│ • MDX Blog Posts│    │ • Storybook     │    │ • API Client    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                    ┌─────────────────┐
-                    │  Shared API     │
-                    │   Client        │
-                    │  (@mono/api)    │
-                    │                 │
-                    │ • TypeScript    │
-                    │ • Auto-generated│
-                    │ • Type Safety   │
-                    └─────────────────┘
-```
-
-## Features
-
-### **Backend (.NET 9.0)**
-
-- **RESTful APIs** with OpenAPI/Swagger documentation
-- **Blog System** with MDX file parsing and frontmatter extraction
-- **Weather API** with comprehensive data models
-- **CORS Configuration** for cross-origin requests
-- **XML Documentation** for enhanced API client generation
-
-### **Web App (Next.js 15.4.1)**
-
-- **App Router** with server and client components
-- **Blog Platform** with MDX content rendering
-- **Weather Dashboard** with interactive features
-- **TailwindCSS** for utility-first styling
-- **Storybook** for component development and testing
-- **TypeScript** integration with generated API types
-
-### **Mobile App (React Native 0.80.1)**
-
-- **Native Navigation** with React Navigation
-- **Shared API Client** with the web application
-- **Cross-platform** iOS and Android support
-- **Type-safe** API consumption
-- **Performance optimized** with proper list rendering
-
-### **Shared Package (@mono/api)**
-
-- **Auto-generated** TypeScript client from OpenAPI specification
-- **Type-safe** API communication
-- **Shared across** web and mobile applications
-- **Fetch-based** HTTP client with full TypeScript support
-
-## Project Structure
+## How do I use this?
+At this point, you've likely generated a client setup.  It will include something along these lines:
 
 ```
-mono-example/
-├── apps/
-│   ├── backend/              # .NET API Server
-│   │   ├── Controllers/      # API Controllers
-│   │   ├── Models/           # Data Models
-│   │   ├── Services/         # Business Logic
-│   │   └── posts/            # MDX Blog Content
-│   ├── web/                  # Next.js Web Application
-│   │   ├── src/
-│   │   │   ├── app/          # App Router Pages
-│   │   │   ├── components/   # Reusable Components
-│   │   │   ├── features/     # Feature-based Components
-│   │   │   └── lib/          # Utilities & API Client
-│   │   └── .storybook/       # Storybook Configuration
-│   └── mobile/               # React Native Mobile App
-│       ├── src/
-│       │   ├── screens/      # Navigation Screens
-│       │   ├── components/   # Mobile Components
-│       │   └── lib/          # API Client & Utils
-│       └── ios/              # iOS Platform Files
-├── packages/
-│   └── api/                  # Generated TypeScript API Client
-│       ├── src/
-│       │   ├── apis/         # API Endpoint Classes
-│       │   └── models/       # TypeScript Interfaces
-│       └── dist/             # Compiled JavaScript
-└── infra/                    # Infrastructure & Deployment
+.
+|- README.md    // this file
+|- pom.xml      // build script
+|-- src
+|--- main
+|---- java
+|----- org.openapitools.codegen.DefaultGenerator.java // generator file
+|---- resources
+|----- default // template files
+|----- META-INF
+|------ services
+|------- org.openapitools.codegen.CodegenConfig
 ```
 
-## Tech Stack
+You _will_ need to make changes in at least the following:
 
-### **Backend**
+`DefaultGenerator.java`
 
-- **Framework**: ASP.NET Core 9.0
-- **Documentation**: OpenAPI/Swagger with XML comments
-- **Data**: Entity Framework Core (In-Memory)
-- **Logging**: Built-in ASP.NET Core logging
-- **Content**: MDX parsing for blog posts
+Templates in this folder:
 
-### **Frontend**
+`src/main/resources/default`
 
-- **Framework**: Next.js 15.4.1 with App Router
-- **Styling**: TailwindCSS with custom components
-- **Components**: Shadcn/ui design system
-- **Development**: Storybook for component development
-- **Testing**: Vitest with Storybook integration
-- **Icons**: Lucide React
-- **Fonts**: Geist Sans & Geist Mono
+Once modified, you can run this:
 
-### **Mobile**
-
-- **Framework**: React Native 0.80.1
-- **Navigation**: React Navigation 7.x
-- **Components**: Native components with shared styling
-- **Development**: Metro bundler with symlink support
-
-### **Shared**
-
-- **Package Manager**: PNPM with workspace support
-- **Language**: TypeScript 5.0+
-- **API Generation**: OpenAPI Generator CLI
-- **Environment**: T3 Environment Variables
-- **Code Quality**: ESLint, Prettier
-
-## Quick Start
-
-### **Prerequisites**
-
-- [Node.js](https://nodejs.org/) 18+
-- [.NET SDK](https://dotnet.microsoft.com/download) 9.0+
-- [PNPM](https://pnpm.io/) 10.5.0+
-- [React Native CLI](https://reactnative.dev/docs/environment-setup) (for mobile development)
-
-### **Installation**
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/the-inconvenience-store/mono-example.git
-   cd mono-example
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   pnpm install
-   ```
-
-3. **Start the backend API**
-
-   ```bash
-   cd apps/backend
-   dotnet restore
-   dotnet run --launch-profile http
-   ```
-
-   Backend will be available at `http://localhost:5074`
-
-4. **Generate API client** (in a new terminal)
-
-   ```bash
-   pnpm generate:api
-   ```
-
-5. **Start the web application** (in a new terminal)
-
-   ```bash
-   cd apps/web
-   pnpm dev
-   ```
-
-   Web app will be available at `http://localhost:3000`
-
-6. **Start the mobile application** (in a new terminal)
-   ```bash
-   cd apps/mobile
-   # For iOS
-   pnpm ios
-   # For Android
-   pnpm android
-   ```
-
-## Available Scripts
-
-### **Root Level**
-
-```bash
-pnpm dev           # Start all applications in parallel
-pnpm build         # Build all applications
-pnpm generate:api  # Generate TypeScript client from OpenAPI spec
+```
+mvn package
 ```
 
-### **Backend (apps/backend)**
+In your generator project. A single jar file will be produced in `target`. You can now use that with [OpenAPI Generator](https://openapi-generator.tech):
 
-```bash
-dotnet run --launch-profile http         # Start the API server
-dotnet build       # Build the application
-dotnet test        # Run tests
+For mac/linux:
+```
+java -cp /path/to/openapi-generator-cli.jar:/path/to/your.jar org.openapitools.codegen.OpenAPIGenerator generate -g default -i /path/to/openapi.yaml -o ./test
+```
+(Do not forget to replace the values `/path/to/openapi-generator-cli.jar`, `/path/to/your.jar` and `/path/to/openapi.yaml` in the previous command)
+
+For Windows users, you will need to use `;` instead of `:` in the classpath, e.g.
+```
+java -cp /path/to/openapi-generator-cli.jar;/path/to/your.jar org.openapitools.codegen.OpenAPIGenerator generate -g default -i /path/to/openapi.yaml -o ./test
 ```
 
-### **Web (apps/web)**
+Now your templates are available to the client generator and you can write output values
 
-```bash
-pnpm dev           # Start Next.js development server
-pnpm build         # Build for production
-pnpm start         # Start production server
-pnpm storybook     # Start Storybook development server
-pnpm lint          # Run ESLint
+## But how do I modify this?
+The `DefaultGenerator.java` has comments in it--lots of comments.  There is no good substitute
+for reading the code more, though.  See how the `DefaultGenerator` implements `CodegenConfig`.
+That class has the signature of all values that can be overridden.
+
+You can also step through DefaultGenerator.java in a debugger.  Just debug the JUnit
+test in DebugCodegenLauncher.  That runs the command line tool and lets you inspect what the code is doing.
+
+For the templates themselves, you have a number of values available to you for generation.
+You can execute the `java` command from above while passing different debug flags to show
+the object you have available during client generation:
+
+```
+# The following additional debug options are available for all codegen targets:
+# -DdebugOpenAPI prints the OpenAPI Specification as interpreted by the codegen
+# -DdebugModels prints models passed to the template engine
+# -DdebugOperations prints operations passed to the template engine
+# -DdebugSupportingFiles prints additional data passed to the template engine
+
+java -DdebugOperations -cp /path/to/openapi-generator-cli.jar:/path/to/your.jar org.openapitools.codegen.OpenAPIGenerator generate -g default -i /path/to/openapi.yaml -o ./test
 ```
 
-### **Mobile (apps/mobile)**
-
-```bash
-pnpm start         # Start Metro bundler, add --reset-cache arg when updating packages
-pnpm ios           # Run on iOS simulator
-pnpm android       # Run on Android emulator
-pnpm test          # Run Jest tests
-```
-
-## API Endpoints
-
-### **Blog Posts**
-
-- `GET /api/blogposts` - Get all blog posts
-- `GET /api/blogposts/{slug}` - Get specific blog post
-
-### **Weather**
-
-- `GET /WeatherForecast` - Get 5-day weather forecast
-
-### **Documentation**
-
-- `GET /swagger` - Interactive API documentation
-- `GET /openapi/v1.json` - OpenAPI specification
-
-## Environment Configuration
-
-### **Backend**
-
-- Default port: `5074`
-- Swagger UI: `/swagger`
-- CORS enabled for `localhost:3000` and `localhost:3001`
-
-### **Web Application**
-
-Create `apps/web/.env.local`:
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5074
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
-DATABASE_URL=file:./dev.db
-```
-
-### **Mobile Application**
-
-- API URL automatically detected via `__DEV__` flag
-- Development: `http://localhost:5074`
-- Production: Configure in `src/lib/api-client.ts`
-
-## Mobile Development
-
-### **iOS Setup**
-
-```bash
-cd apps/mobile
-cd ios && pod install && cd ..
-pnpm ios
-```
-
-### **Android Setup**
-
-```bash
-cd apps/mobile
-pnpm android
-```
-
-### **Metro Configuration**
-
-The project includes Metro configuration for monorepo symlink support and workspace package resolution.
-
-## Testing
-
-### **Web Application**
-
-```bash
-cd apps/web
-pnpm test          # Run Vitest tests
-pnpm storybook     # Visual component testing
-```
-
-### **Mobile Application**
-
-```bash
-cd apps/mobile
-pnpm test          # Run Jest tests
-```
-
-## Documentation
-
-- **[API Documentation](http://localhost:5074/swagger)** - Interactive API docs (when backend is running)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'Add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
-
-## Resources
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [React Native Documentation](https://reactnative.dev/docs/getting-started)
-- [ASP.NET Core Documentation](https://docs.microsoft.com/en-us/aspnet/core/)
-- [OpenAPI Generator](https://openapi-generator.tech/)
-- [TailwindCSS Documentation](https://tailwindcss.com/docs)
-- [Storybook Documentation](https://storybook.js.org/docs)
-
----
-
-**Built with ❤️ by [the-inconvenience-store](https://github.com/the-inconvenience-store)**
+Will, for example, output the debug info for operations.
+You can use this info in the `api.mustache` file.

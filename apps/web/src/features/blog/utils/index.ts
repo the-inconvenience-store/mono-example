@@ -1,9 +1,16 @@
-import { blogPostsApi, type BlogPost } from '@/lib/api-client'
-
+// import { blogPostsApi, type BlogPost } from '@/lib/api-client'
+import { getAllBlogPosts, BlogPost, getBlogPostBySlug } from '@mono/api-orval'
 export async function getBlogPosts(): Promise<BlogPost[]> {
   try {
-    const response = await blogPostsApi.getAllBlogPosts()
-    return response
+    const response = await getAllBlogPosts()
+    // The new getAllBlogPosts() returns an object with a 'data' property containing the posts array.
+    // Check if response.data is an array (BlogPost[]), otherwise handle as error.
+    if (Array.isArray(response.data)) {
+      return response.data
+    } else {
+      console.error('Failed to fetch blog posts: received ProblemDetails', response.data)
+      return []
+    }
   } catch (error) {
     console.error('Failed to fetch blog posts:', error)
     return []
@@ -12,8 +19,14 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
-    const response = await blogPostsApi.getBlogPostBySlug({ slug })
-    return response
+    const response = await getBlogPostBySlug(slug)
+    // The new getBlogPostBySlug() returns an object with a 'data' property containing the post or ProblemDetails.
+    if (response && 'data' in response && response.data && !('type' in response.data)) {
+      return response.data as BlogPost
+    } else {
+      console.error('Failed to fetch blog post: received ProblemDetails', response?.data)
+      return null
+    }
   } catch (error) {
     console.error(`Failed to fetch blog post with slug ${slug}:`, error)
     return null

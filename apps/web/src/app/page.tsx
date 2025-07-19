@@ -1,4 +1,5 @@
 import { BlogPosts } from '@/features/blog/components/posts'
+import { WeatherDemo } from '@/components/weather-demo'
 
 export default async function Page() {
   return (
@@ -12,6 +13,11 @@ export default async function Page() {
         when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
         It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`}
       </p>
+
+      <div className="my-8">
+        <WeatherDemo />
+      </div>
+
       <div className="my-8">
         <BlogPosts />
       </div>

@@ -9,22 +9,27 @@
         "build": "pnpm run --recursive build",
         "clean": "pnpm run --recursive clean",
         "api": "openapi-generator-cli",
-        "generate:api": "openapi-generator-cli generate --generator-key backend"
+        "generate:api": "openapi-generator-cli generate --generator-key backend",
+        "generate:orval": "orval --config ./orval.config.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "pnpm": {
         "onlyBuiltDependencies": [
+            "@nestjs/core",
+            "@openapitools/openapi-generator-cli",
             "@tailwindcss/oxide",
             "esbuild",
+            "msw",
             "sharp",
-            "unrs-resolver",
-            "@nestjs/core",
-            "@openapitools/openapi-generator-cli"
+            "unrs-resolver"
         ]
     },
     "dependencies": {
         "@openapitools/openapi-generator-cli": "^2.21.2"
+    },
+    "devDependencies": {
+        "orval": "^7.10.0"
     }
 }
