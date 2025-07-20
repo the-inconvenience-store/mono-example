@@ -1,0 +1,91 @@
+---
+id: get-blog-post-by-slug
+title: "Gets a specific blog post by its URL slug"
+description: "Retrieves a single blog post using its URL-friendly slug identifier."
+sidebar_label: "Gets a specific blog post by its URL slug"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV21v2zYQ/isENwzJJjlOln6YvwwpUhQZGiRIWmBDnCG0dJaZSpRKUk5dQ/99d6QkS5ETpxg67EMDOJLI4/FennuOXHMrEsMnN/x1mifsMjfW8NuAx2AiLQsrc8Un/AqslrAEwwQzUiUpsBmJFyjOShph0hr24epdOEdBFacrZtISR2NQVs4l6NFUT9X7BdTjhsWg5RJiNtd5xixO5FomUomUzWUKSmTAhIpJsjQklmt2/eZiox83M04p/d58FlmReuVmQiMhm/IErEXbQmOFthCHD9IuQg0islPeyIh4KVSEk3ZV1D6HhbAWtDIbKQWf7b0JZ2BwVqMCGUE9Tb9rv7sGU+TKgDPg7u7u3uRuek3/GKrJwIpYWDHlE1YP0rCVNgUam/K33mR27U1mZDK78iYHmxVFOUulWUB8Yv26o/HRcTg+DA9f9eRMmWVCr7zMOxBauVDPhJGRYfncq8ZcLCHNiwyT1VsuM5HUhrmwhVJZnY/ui8T7zlgVNL5R6L3oc2FvxaNcWbcdrfiBPeM3hniqvJ0IBjEajfzmVR1lHvC8AC0Iq2cxohV1EZgJy69X12gWShRCI6Iwq4T1NSd4oaTxk5Iwjklf8MfAJ8A+h2oHSxfRthz2YJSMgh1h2MedNHwqpQa02OoSAm6iBWSCT9Y8E5/fgUrQnsnheBzwTKr2m1xx6ETr/r4R4Zdx+NvtL3u/T8L2Y//nH1E94ZlcxMpVCa+qW9rR49PQJkfjMT0GhV4i8B+5ZMoI4W7mZZquUHOdOlotiiKVkQv9AaGdxjZ+bDy8aRcFbRHgq4v/bWtrPruHiEQKTRm10lvaLnikslMEpMtDnTynctqt1ov1w300DHc/jtsA4hRRMfWihqLgWclD8gl48yroOUL2PJXu6TReH1chPY6axzDV20x0O/g8MQzl0FomFTu7viA8ZwJB/Bf+hefn4enpfs+RDc+Q4U3M+0F89TiI410mnrAZFtic1fqG1m3QszFlQ2fzUsWCyEuk20nNx9sukD+iPCs0LEAZ7D4sKbGWcWwJZJebzBUuMAEjsOADq9dC4FrRIs8/mhH57Xhxh9c7nb5wL9TvQGDVISqcWuKbIa3gaoXlJ2bkuueLTSQ8N3ejQBSNNR9ge4ul3+ayA/45isCwyWNgDDnPmopzdohOHrANUvdr2vb56Z/0omzmQNrW3oQT+Z43dVvVlf5tqO1lnD04bjSnjB6mnuZscqJDfF/LEZnAAqvXD+G9R4FsZmnPvLTdwPZr8Gu6Jep/AI3Mzf4QS3HtrGKpnGkqM8rurJRpTLrwlKWRBXC3uUC2xzb7LwAkXCml2HA7XjorG2gFjb++tupO3MCn6d9oAhlxPD4e9qqzOVN5D5sSD69NqeNZsICImnSr/MV9a0ffcLPrQdL79VkFmwazU5JIpuwo55SHxBWUJ2Q/9OvRtsUxRlSmL9pHKtwJT7svEH4y9euqU+U6xxXZqbPA1Ml6te1gceYgr4E9CESH8kAj8kPUIfky0BrBqP09g+BIGayJ73ve/oO8Ve5gtshjz4LuyEzsxg+aWjQHayqkyh2Y53nnCMXPc6zEk8uzYWO/PHMskwklEkprW651oXaJD8/o7ir502McPGCDXPjDNkTCYQIxY/wWh6PxaOxOUagV9yG76uM90qS7sXoiiDpcMVs1F9aGHHp2rzeY+373/X73/V/ffWs+sJilgyLFYwbVQqkdsfgSvmnbqUH5SXPpWhC74uR6jSGBDzqtKhr+VAKd6G/wdSm09NSCV+ZYGnqPtzf/bsXsXdWXtH32Le/PWx2vB4Wii+BSpCV94etHWDX3/eoW5RYgsAidY37qBK+4he0sGrQaukG3FPn2zXukzX8A2leqeg==
+sidebar_class_name: "get api-method"
+info_path: docs/api/mono-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Gets a specific blog post by its URL slug"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/BlogPosts/{slug}"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Retrieves a single blog post using its URL-friendly slug identifier.
+The slug is derived from the original filename and is used for SEO-friendly URLs.
+
+Example slugs:
+- "getting-started-with-react"
+- "advanced-typescript-patterns"
+- "nextjs-best-practices"
+
+Sample response:
+```json
+{
+  "metadata": {
+    "title": "Getting Started with React",
+    "publishedAt": "2024-01-15",
+    "summary": "Learn the basics of React development",
+    "image": "react-intro.jpg"
+  },
+  "slug": "getting-started-with-react",
+  "content": "# Getting Started with React\n\nReact is a..."
+}
+```
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<ParamsDetails
+  parameters={[{"name":"slug","in":"path","description":"The URL-friendly slug identifier for the blog post (e.g., \"getting-started-with-react\")","required":true,"schema":{"maxLength":100,"minLength":1,"pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$","type":"string"}}]}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Returns the blog post successfully","content":{"application/json":{"schema":{"required":["content","metadata","slug"],"type":"object","properties":{"metadata":{"required":["publishedAt","summary","title"],"type":"object","properties":{"title":{"maxLength":200,"minLength":1,"type":"string","description":"The title of the blog post","example":"Getting Started with React"},"publishedAt":{"minLength":1,"pattern":"^\\d{4}-\\d{2}-\\d{2}$","type":"string","description":"The publication date of the blog post in ISO format (YYYY-MM-DD)","example":"2024-01-15"},"summary":{"maxLength":500,"minLength":10,"type":"string","description":"A brief summary of the blog post content","example":"Learn the fundamentals of React development with this comprehensive guide covering components, props, state, and hooks."},"image":{"maxLength":500,"minLength":0,"type":"string","description":"Optional featured image URL for the blog post","nullable":true,"example":"react-fundamentals.jpg"}},"additionalProperties":false,"description":"Represents metadata for a blog post extracted from MDX frontmatter","title":"PostMetadata"},"slug":{"maxLength":100,"minLength":1,"pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$","type":"string","description":"The URL-friendly slug derived from the filename","example":"getting-started-with-react"},"content":{"minLength":1,"type":"string","description":"The main content of the blog post (MDX content without frontmatter)","example":"# Getting Started with React\\n\\nReact is a powerful JavaScript library for building user interfaces..."}},"additionalProperties":false,"description":"Represents a complete blog post with metadata, content, and slug","title":"BlogPost"}}}},"404":{"description":"If no blog post exists with the specified slug","content":{"application/json":{"schema":{"type":"object","properties":{"type":{"type":"string","nullable":true},"title":{"type":"string","nullable":true},"status":{"type":"integer","format":"int32","nullable":true},"detail":{"type":"string","nullable":true},"instance":{"type":"string","nullable":true}},"additionalProperties":{},"title":"ProblemDetails"}}}},"500":{"description":"If there was an internal server error retrieving the post","content":{"application/json":{"schema":{"type":"object","properties":{"type":{"type":"string","nullable":true},"title":{"type":"string","nullable":true},"status":{"type":"integer","format":"int32","nullable":true},"detail":{"type":"string","nullable":true},"instance":{"type":"string","nullable":true}},"additionalProperties":{},"title":"ProblemDetails"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

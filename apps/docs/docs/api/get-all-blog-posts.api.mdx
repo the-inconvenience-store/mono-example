@@ -1,0 +1,83 @@
+---
+id: get-all-blog-posts
+title: "Gets all blog posts with their metadata and content"
+description: "Retrieves a complete list of all available blog posts including their metadata and full content."
+sidebar_label: "Gets all blog posts with their metadata and content"
+hide_title: true
+hide_table_of_contents: true
+api: eJztV11PIzcU/SuWW1XQZkKgy0PzUlHRrqhAi2BXapVQ4czcTMx67Fnbw0ej/Pfea8fMTAIF1KdKuxI7E499fT/OOddeci9Kx8cT/osyJTs3zjt+NeAFuNzK2kuj+ZhfgLcSbsExwXJT1Qo8MCWdZ2bOhFJM3AqpxEwBm5GZmswwqXPVFFKXzC9AWlaBF4XwggldsHmDy3KjPWg/nNqpDlszYYFZ8I3VULA76RfrtcbKUmqhWN3MlMwFOYaDBdhgLW4FYzKUsbO00Y6XXsGgtwg/4IhrqkrYhwEzIUY0LCtRwm408OniNJtjxLpQD8yppozDv5HPZ8d/JL9plP4uBaUE/Xa10S56cX19feNM+Dyh/xhbxgdjU54yMeXjdpg+BH9pdMrfg/eUu0svrE/JuACR+ykfdNeE4NwCiiMfVx6MDt5lo/1s/3Bj5jroOOsUhNWUXTYTTuaOShnMswIrrUxdUYR9AyFHcbmlqZnU3prhTV1OeZq3GrRxhtSF6WWMJnMxmoyiyexGNFOeEhvWfMP+JQeY+amO/kqEzXA4TC6s6HG1rgEfcFODDaU/KRDKaPJIKQJ7xPqAp7IhC5aYuxE9tuCPgHQhWQn1HZy7Js/BOUL0A9pbx0BmRF0n3O0RGmjM5QuoBL35hxrQurBW0DrpoQo+WPjSSAsFsTIZGzxiBl8prUTStQEzu4GcptSWYvUyhvK4YMNkBy9kK2IC3wL2XjYbp5F9cX8KuvQLPsasoYNSp9/7j0YcCocu+aagfMRMBkOUyoDBlE6cCveBT7FYz9Sfrwa9QMif3v618B4s7fXXdFos360yehykx7f8NS5u6saWtyg87OTyA5sbWwnPdv7Ef9nZWXZ8vNsLpKUkOZ5y3k/i4WYSRy+5eMRmKFLzJGbb3rXoaV1peT9vdCGI5UI9zf4kwEgwUn0LC9BO3gIrG1kAjt0C+RU+Go0LHEotggUfyHOSWdLmhTGf3ZDiDvLxQtQvBv0hCfYcBNISURHMkmZTGbbQpJGW1Jn42NsGupmIEtbNAikZX6Gnoihk3Oa8A/45ToHt3oiJcRR82+DID9GpA9x7i3uhr3NrqtBC8EX7KoD0kXtjTpqUuldACjG9n7D9ba51sD4R2d+j7KerH3Z+HmePP3a/fx3et/oeosFiwdd+B9BIBRrz1cPU8+pOQXQE8a0aUQkk2Hr9Nrx3Or04YNU0vpvYPgff0k7Q/h1YVHT2Ox5tLoNXKP0zSzSj6s4aqcLRpnF4BME2iLMFdgHsQ/8BQJ3TVRtl8DJBa5DijdwK+Gjhk9oaurAiLw6f6mYnIY14zroTuKOOzhOhMBIkNANrMUAbj3wUYr1ulG9tbM81kPB1uVX9PlFXg7bTvDiT1KbpGOcUUxmYFZU5Dv148NTiAlMr1av2kRp30vlrnHoWA8tVh+7W4IrqOHjgUtWw1gtTRFrxwG6kC9/rnlmknptOM+ZnRht2dH6y3SLOTwJeK6FFScXsnFsCsLoUqoV1NOe7bvWJcncotQgZsgS5CLKKSHFxi/3haDgK/Rit4j7kV1CI0L9duB9s7vrEhaDtVb0Ili3svl5Dvl5D/r/XkLVeeDwL7NUK+xpRprFBeCLFJ7ylOB7DFyTkOLhcYmbgk1WrFQ1/aYCOjhN8vRVWRsmZXKGxBQgEIv5Y8s/wQOTHe0kdyCpUE64am7K9uurIzftfP6IE/QNm2o4b
+sidebar_class_name: "get api-method"
+info_path: docs/api/mono-api
+custom_edit_url: null
+---
+
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import ParamsDetails from "@theme/ParamsDetails";
+import RequestSchema from "@theme/RequestSchema";
+import StatusCodes from "@theme/StatusCodes";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Gets all blog posts with their metadata and content"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"get"}
+  path={"/BlogPosts"}
+  context={"endpoint"}
+>
+  
+</MethodEndpoint>
+
+
+
+Retrieves a complete list of all available blog posts including their metadata and full content.
+Posts are returned with their original publication order and include:
+- Metadata (title, publication date, summary, optional image)
+- URL-friendly slug
+- Full MDX content
+
+Sample response:
+```json
+[
+  {
+    "metadata": {
+      "title": "Getting Started with React",
+      "publishedAt": "2024-01-15",
+      "summary": "Learn the basics of React development",
+      "image": "react-intro.jpg"
+    },
+    "slug": "getting-started-with-react",
+    "content": "# Getting Started with React\n\nReact is a..."
+  }
+]
+```
+
+<ParamsDetails
+  parameters={undefined}
+>
+  
+</ParamsDetails>
+
+<RequestSchema
+  title={"Body"}
+  body={undefined}
+>
+  
+</RequestSchema>
+
+<StatusCodes
+  id={undefined}
+  label={undefined}
+  responses={{"200":{"description":"Returns the list of blog posts successfully","content":{"application/json":{"schema":{"type":"array","items":{"required":["content","metadata","slug"],"type":"object","properties":{"metadata":{"required":["publishedAt","summary","title"],"type":"object","properties":{"title":{"maxLength":200,"minLength":1,"type":"string","description":"The title of the blog post","example":"Getting Started with React"},"publishedAt":{"minLength":1,"pattern":"^\\d{4}-\\d{2}-\\d{2}$","type":"string","description":"The publication date of the blog post in ISO format (YYYY-MM-DD)","example":"2024-01-15"},"summary":{"maxLength":500,"minLength":10,"type":"string","description":"A brief summary of the blog post content","example":"Learn the fundamentals of React development with this comprehensive guide covering components, props, state, and hooks."},"image":{"maxLength":500,"minLength":0,"type":"string","description":"Optional featured image URL for the blog post","nullable":true,"example":"react-fundamentals.jpg"}},"additionalProperties":false,"description":"Represents metadata for a blog post extracted from MDX frontmatter","title":"PostMetadata"},"slug":{"maxLength":100,"minLength":1,"pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$","type":"string","description":"The URL-friendly slug derived from the filename","example":"getting-started-with-react"},"content":{"minLength":1,"type":"string","description":"The main content of the blog post (MDX content without frontmatter)","example":"# Getting Started with React\\n\\nReact is a powerful JavaScript library for building user interfaces..."}},"additionalProperties":false,"description":"Represents a complete blog post with metadata, content, and slug","title":"BlogPost"}}}}},"500":{"description":"If there was an internal server error retrieving posts","content":{"application/json":{"schema":{"type":"object","properties":{"type":{"type":"string","nullable":true},"title":{"type":"string","nullable":true},"status":{"type":"integer","format":"int32","nullable":true},"detail":{"type":"string","nullable":true},"instance":{"type":"string","nullable":true}},"additionalProperties":{},"title":"ProblemDetails"}}}}}}
+>
+  
+</StatusCodes>
+
+
+      

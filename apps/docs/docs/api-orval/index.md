@@ -1,4 +1,4 @@
-# @mono/api-orval
+# TypeScript API Client
 
 This guide explains how to configure the `@mono/api-orval` package for your specific needs across different platforms and environments.
 

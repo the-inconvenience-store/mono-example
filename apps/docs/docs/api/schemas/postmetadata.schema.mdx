@@ -1,0 +1,33 @@
+---
+id: postmetadata
+title: "PostMetadata"
+description: "Represents metadata for a blog post extracted from MDX frontmatter"
+sidebar_label: "PostMetadata"
+hide_title: true
+hide_table_of_contents: true
+schema: true
+sample: {"title":"Getting Started with React","publishedAt":"2024-01-15","summary":"Learn the fundamentals of React development with this comprehensive guide covering components, props, state, and hooks.","image":"react-fundamentals.jpg"}
+custom_edit_url: null
+---
+
+import Schema from "@theme/Schema";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"PostMetadata"}
+>
+</Heading>
+
+
+
+Represents metadata for a blog post extracted from MDX frontmatter
+
+<Schema
+  schema={{"required":["publishedAt","summary","title"],"type":"object","properties":{"title":{"maxLength":200,"minLength":1,"type":"string","description":"The title of the blog post","example":"Getting Started with React"},"publishedAt":{"minLength":1,"pattern":"^\\d{4}-\\d{2}-\\d{2}$","type":"string","description":"The publication date of the blog post in ISO format (YYYY-MM-DD)","example":"2024-01-15"},"summary":{"maxLength":500,"minLength":10,"type":"string","description":"A brief summary of the blog post content","example":"Learn the fundamentals of React development with this comprehensive guide covering components, props, state, and hooks."},"image":{"maxLength":500,"minLength":0,"type":"string","description":"Optional featured image URL for the blog post","nullable":true,"example":"react-fundamentals.jpg"}},"additionalProperties":false,"description":"Represents metadata for a blog post extracted from MDX frontmatter","title":"PostMetadata"}}
+  schemaType={"response"}
+>
+  
+</Schema>
+            

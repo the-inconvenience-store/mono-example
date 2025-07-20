@@ -1,12 +1,14 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type * as Plugin from "@docusaurus/types/src/plugin";
+import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'mono-example docs',
+  tagline: 'Example of auto-generated docs',
   favicon: 'img/favicon.ico',
   plugins: [
     [
@@ -19,6 +21,25 @@ const config: Config = {
         watch: process.env.TYPEDOC_WATCH,
       },
     ],
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: "api", // plugin id
+        docsPluginId: "classic", // configured for preset-classic
+        config: {
+          backend: {
+            specPath: "http://localhost:5074/swagger/v1/swagger.json",
+            outputDir: "docs/api",
+            sidebarOptions: {
+              groupPathsBy: "tag",
+              categoryLinkSource: "tag"
+            },
+            showSchemas: true,
+            baseUrl: 'http://localhost:5074'
+          } satisfies OpenApiPlugin.Options,
+        }
+      },
+    ]
   ],
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -33,8 +54,8 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'mono', // Usually your GitHub org/user name.
+  projectName: 'mono-example', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -55,8 +76,9 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+          docItemComponent: "@theme/ApiItem",
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/the-inconvenience-store/mono-example/tree/main/apps/docs',
         },
         blog: {
           showReadingTime: true,
@@ -67,7 +89,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/the-inconvenience-store/mono-example/tree/main/apps/docs/blog',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -84,7 +106,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'mono-example',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -94,11 +116,11 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docs',
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/the-inconvenience-store/mono-example',
           label: 'GitHub',
           position: 'right',
         },
@@ -111,8 +133,8 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'TS API Client',
+              to: '/docs/api-orval',
             },
           ],
         },
@@ -154,6 +176,7 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+  themes: ["docusaurus-theme-openapi-docs"]
 };
 
 export default config;

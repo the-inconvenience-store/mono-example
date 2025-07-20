@@ -1,0 +1,33 @@
+---
+id: blogpost
+title: "BlogPost"
+description: "Represents a complete blog post with metadata, content, and slug"
+sidebar_label: "BlogPost"
+hide_title: true
+hide_table_of_contents: true
+schema: true
+sample: {"metadata":{"title":"Getting Started with React","publishedAt":"2024-01-15","summary":"Learn the fundamentals of React development with this comprehensive guide covering components, props, state, and hooks.","image":"react-fundamentals.jpg"},"slug":"getting-started-with-react","content":"# Getting Started with React\\n\\nReact is a powerful JavaScript library for building user interfaces..."}
+custom_edit_url: null
+---
+
+import Schema from "@theme/Schema";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"BlogPost"}
+>
+</Heading>
+
+
+
+Represents a complete blog post with metadata, content, and slug
+
+<Schema
+  schema={{"required":["content","metadata","slug"],"type":"object","properties":{"metadata":{"required":["publishedAt","summary","title"],"type":"object","properties":{"title":{"maxLength":200,"minLength":1,"type":"string","description":"The title of the blog post","example":"Getting Started with React"},"publishedAt":{"minLength":1,"pattern":"^\\d{4}-\\d{2}-\\d{2}$","type":"string","description":"The publication date of the blog post in ISO format (YYYY-MM-DD)","example":"2024-01-15"},"summary":{"maxLength":500,"minLength":10,"type":"string","description":"A brief summary of the blog post content","example":"Learn the fundamentals of React development with this comprehensive guide covering components, props, state, and hooks."},"image":{"maxLength":500,"minLength":0,"type":"string","description":"Optional featured image URL for the blog post","nullable":true,"example":"react-fundamentals.jpg"}},"additionalProperties":false,"description":"Represents metadata for a blog post extracted from MDX frontmatter","title":"PostMetadata"},"slug":{"maxLength":100,"minLength":1,"pattern":"^[a-z0-9]+(?:-[a-z0-9]+)*$","type":"string","description":"The URL-friendly slug derived from the filename","example":"getting-started-with-react"},"content":{"minLength":1,"type":"string","description":"The main content of the blog post (MDX content without frontmatter)","example":"# Getting Started with React\\n\\nReact is a powerful JavaScript library for building user interfaces..."}},"additionalProperties":false,"description":"Represents a complete blog post with metadata, content, and slug","title":"BlogPost"}}
+  schemaType={"response"}
+>
+  
+</Schema>
+            

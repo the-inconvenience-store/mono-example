@@ -1,0 +1,33 @@
+---
+id: weatherforecast
+title: "WeatherForecast"
+description: "Represents a weather forecast for a specific date"
+sidebar_label: "WeatherForecast"
+hide_title: true
+hide_table_of_contents: true
+schema: true
+sample: {"date":"2024-01-16","temperatureC":15,"temperatureF":59,"summary":"Mild"}
+custom_edit_url: null
+---
+
+import Schema from "@theme/Schema";
+import Heading from "@theme/Heading";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"WeatherForecast"}
+>
+</Heading>
+
+
+
+Represents a weather forecast for a specific date
+
+<Schema
+  schema={{"required":["date","temperatureC"],"type":"object","properties":{"date":{"type":"string","description":"The date for this weather forecast","format":"date","example":"2024-01-16"},"temperatureC":{"maximum":55,"minimum":-20,"type":"integer","description":"Temperature in Celsius","format":"int32","example":15},"temperatureF":{"type":"integer","description":"Temperature in Fahrenheit (automatically calculated from Celsius)","format":"int32","readOnly":true,"example":59},"summary":{"type":"string","description":"Brief description of the weather conditions","nullable":true,"example":"Mild"}},"additionalProperties":false,"description":"Represents a weather forecast for a specific date","title":"WeatherForecast"}}
+  schemaType={"response"}
+>
+  
+</Schema>
+            

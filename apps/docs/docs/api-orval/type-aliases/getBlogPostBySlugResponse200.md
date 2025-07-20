@@ -2,7 +2,7 @@
 
 > **getBlogPostBySlugResponse200** = `object`
 
-Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:166](https://github.com/the-inconvenience-store/mono-example/blob/a3e1f4667d455f254c4a536af743fc2dff215781/packages/api-orval/gen/apis/blog-posts/blog-posts.ts#L166)
+Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:166](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/apis/blog-posts/blog-posts.ts#L166)
 
 Retrieves a single blog post using its URL-friendly slug identifier.
 The slug is derived from the original filename and is used for SEO-friendly URLs.
@@ -32,7 +32,7 @@ Sample response:
 
 > **data**: [`BlogPost`](../interfaces/BlogPost.md)
 
-Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:167](https://github.com/the-inconvenience-store/mono-example/blob/a3e1f4667d455f254c4a536af743fc2dff215781/packages/api-orval/gen/apis/blog-posts/blog-posts.ts#L167)
+Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:167](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/apis/blog-posts/blog-posts.ts#L167)
 
 ***
 
@@ -40,4 +40,4 @@ Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:167](https://g
 
 > **status**: `200`
 
-Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:168](https://github.com/the-inconvenience-store/mono-example/blob/a3e1f4667d455f254c4a536af743fc2dff215781/packages/api-orval/gen/apis/blog-posts/blog-posts.ts#L168)
+Defined in: [packages/api-orval/gen/apis/blog-posts/blog-posts.ts:168](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/apis/blog-posts/blog-posts.ts#L168)

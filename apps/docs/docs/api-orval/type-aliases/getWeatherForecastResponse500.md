@@ -2,7 +2,7 @@
 
 > **getWeatherForecastResponse500** = `object`
 
-Defined in: [packages/api-orval/gen/apis/weather/weather.ts:48](https://github.com/the-inconvenience-store/mono-example/blob/a3e1f4667d455f254c4a536af743fc2dff215781/packages/api-orval/gen/apis/weather/weather.ts#L48)
+Defined in: [packages/api-orval/gen/apis/weather/weather.ts:48](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/apis/weather/weather.ts#L48)
 
 ## Properties
 
@@ -10,7 +10,7 @@ Defined in: [packages/api-orval/gen/apis/weather/weather.ts:48](https://github.c
 
 > **data**: [`ProblemDetails`](../interfaces/ProblemDetails.md)
 
-Defined in: [packages/api-orval/gen/apis/weather/weather.ts:49](https://github.com/the-inconvenience-store/mono-example/blob/a3e1f4667d455f254c4a536af743fc2dff215781/packages/api-orval/gen/apis/weather/weather.ts#L49)
+Defined in: [packages/api-orval/gen/apis/weather/weather.ts:49](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/apis/weather/weather.ts#L49)
 
 ***
 
@@ -18,4 +18,4 @@ Defined in: [packages/api-orval/gen/apis/weather/weather.ts:49](https://github.c
 
 > **status**: `500`
 
-Defined in: [packages/api-orval/gen/apis/weather/weather.ts:50](https://github.com/the-inconvenience-store/mono-example/blob/a3e1f4667d455f254c4a536af743fc2dff215781/packages/api-orval/gen/apis/weather/weather.ts#L50)
+Defined in: [packages/api-orval/gen/apis/weather/weather.ts:50](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/apis/weather/weather.ts#L50)
