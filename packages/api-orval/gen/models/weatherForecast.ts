@@ -11,18 +11,18 @@
  */
 export interface WeatherForecast {
   /** The date for this weather forecast */
-  date: string;
+  date: string
   /**
    * Temperature in Celsius
    * @minimum -20
    * @maximum 55
    */
-  temperatureC: number;
+  temperatureC: number
   /** Temperature in Fahrenheit (automatically calculated from Celsius) */
-  readonly temperatureF?: number;
+  readonly temperatureF?: number
   /**
    * Brief description of the weather conditions
    * @nullable
    */
-  summary?: string | null;
+  summary?: string | null
 }

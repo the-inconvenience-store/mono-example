@@ -5,31 +5,23 @@
  * API for managing blog posts with MDX content parsing & retrieving the weather forecast
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query'
 import type {
   QueryFunction,
   QueryKey,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from '@tanstack/react-query'
 
-import type {
-  ProblemDetails,
-  WeatherForecast
-} from '../../models';
+import type { ProblemDetails, WeatherForecast } from '../../models'
 
-import { customFetch } from '../../../src/custom-fetch';
+import { customFetch } from '../../../src/custom-fetch'
 
-type AwaitedInput<T> = PromiseLike<T> | T;
+type AwaitedInput<T> = PromiseLike<T> | T
 
-      type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
+type Awaited<O> = O extends AwaitedInput<infer T> ? T : never
 
-
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
 
 /**
  * Returns an array of weather forecasts for the next 5 days starting from tomorrow.
@@ -57,78 +49,85 @@ export type getWeatherForecastResponse500 = {
   data: ProblemDetails
   status: 500
 }
-    
-export type getWeatherForecastResponseComposite = getWeatherForecastResponse200 | getWeatherForecastResponse500;
-    
+
+export type getWeatherForecastResponseComposite =
+  | getWeatherForecastResponse200
+  | getWeatherForecastResponse500
+
 export type getWeatherForecastResponse = getWeatherForecastResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getGetWeatherForecastUrl = () => {
-
-
-  
-
   return `/WeatherForecast`
 }
 
-export const getWeatherForecast = async ( options?: RequestInit): Promise<getWeatherForecastResponse> => {
-  
-  return customFetch<getWeatherForecastResponse>(getGetWeatherForecastUrl(),
-  {      
+export const getWeatherForecast = async (
+  options?: RequestInit,
+): Promise<getWeatherForecastResponse> => {
+  return customFetch<getWeatherForecastResponse>(getGetWeatherForecastUrl(), {
     ...options,
-    method: 'GET'
-    
-    
-  }
-);}
-
-
-
-export const getGetWeatherForecastQueryKey = () => {
-    return [`/WeatherForecast`] as const;
-    }
-
-    
-export const getGetWeatherForecastQueryOptions = <TData = Awaited<ReturnType<typeof getWeatherForecast>>, TError = ProblemDetails>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getWeatherForecast>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetWeatherForecastQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getWeatherForecast>>> = ({ signal }) => getWeatherForecast({ signal, ...requestOptions });
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getWeatherForecast>>, TError, TData> & { queryKey: QueryKey }
+    method: 'GET',
+  })
 }
 
-export type GetWeatherForecastQueryResult = NonNullable<Awaited<ReturnType<typeof getWeatherForecast>>>
-export type GetWeatherForecastQueryError = ProblemDetails
+export const getGetWeatherForecastQueryKey = () => {
+  return [`/WeatherForecast`] as const
+}
 
+export const getGetWeatherForecastQueryOptions = <
+  TData = Awaited<ReturnType<typeof getWeatherForecast>>,
+  TError = ProblemDetails,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getWeatherForecast>>,
+    TError,
+    TData
+  >
+  request?: SecondParameter<typeof customFetch>
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetWeatherForecastQueryKey()
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getWeatherForecast>>
+  > = ({ signal }) => getWeatherForecast({ signal, ...requestOptions })
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getWeatherForecast>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey }
+}
+
+export type GetWeatherForecastQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getWeatherForecast>>
+>
+export type GetWeatherForecastQueryError = ProblemDetails
 
 /**
  * @summary Gets a 5-day weather forecast with random temperature data
  */
 
-export function useGetWeatherForecast<TData = Awaited<ReturnType<typeof getWeatherForecast>>, TError = ProblemDetails>(
-  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getWeatherForecast>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
-  
- ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-
+export function useGetWeatherForecast<
+  TData = Awaited<ReturnType<typeof getWeatherForecast>>,
+  TError = ProblemDetails,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getWeatherForecast>>,
+    TError,
+    TData
+  >
+  request?: SecondParameter<typeof customFetch>
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetWeatherForecastQueryOptions(options)
 
-  const query = useQuery(queryOptions ) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey
+  }
 
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey
 
-  return query;
+  return query
 }
-
-
-

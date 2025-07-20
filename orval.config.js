@@ -1,5 +1,5 @@
 module.exports = {
-    'backend': {
+    'backendQuery': {
         input: { target: 'http://localhost:5074/swagger/v1/swagger.json' },
         output: {
             workspace: './packages/api-orval',
@@ -12,14 +12,14 @@ module.exports = {
                 indexMockFiles: true
             },
             // baseUrl: 'http://localhost:5074',
-            docs: true,
             urlEncodeParameters: true,
             override: {
                 mutator: {
                     path: 'src/custom-fetch.ts',
                     name: 'customFetch'
                 }
-            }
+            },
+            prettier: true
         }
     },
     backendZod: {
@@ -41,7 +41,8 @@ module.exports = {
                         header: true,
                     }
                 }
-            }
+            },
+            prettier: true
         },
     },
 };

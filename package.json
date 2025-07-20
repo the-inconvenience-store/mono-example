@@ -9,8 +9,9 @@
         "build": "pnpm run --recursive build",
         "clean": "pnpm run --recursive clean",
         "api": "openapi-generator-cli",
-        "generate:api": "openapi-generator-cli generate --generator-key backend",
-        "generate:orval": "orval --config ./orval.config.js"
+        "generate:old-api": "openapi-generator-cli generate --generator-key backend",
+        "generate:api": "orval --config ./orval.config.js",
+        "generate:docs": "pnpm run --parallel generate:docs"
     },
     "keywords": [],
     "author": "",

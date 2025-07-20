@@ -5,23 +5,23 @@
  * API for managing blog posts with MDX content parsing & retrieving the weather forecast
  * OpenAPI spec version: 1.0.0
  */
-import type { PostMetadata } from './postMetadata';
+import type { PostMetadata } from './postMetadata'
 
 /**
  * Represents a complete blog post with metadata, content, and slug
  */
 export interface BlogPost {
-  metadata: PostMetadata;
+  metadata: PostMetadata
   /**
    * The URL-friendly slug derived from the filename
    * @minLength 1
    * @maxLength 100
    * @pattern ^[a-z0-9]+(?:-[a-z0-9]+)*$
    */
-  slug: string;
+  slug: string
   /**
    * The main content of the blog post (MDX content without frontmatter)
    * @minLength 1
    */
-  content: string;
+  content: string
 }

@@ -5,31 +5,23 @@
  * API for managing blog posts with MDX content parsing & retrieving the weather forecast
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useQuery
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query'
 import type {
   QueryFunction,
   QueryKey,
   UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+  UseQueryResult,
+} from '@tanstack/react-query'
 
-import type {
-  BlogPost,
-  ProblemDetails
-} from '../../models';
+import type { BlogPost, ProblemDetails } from '../../models'
 
-import { customFetch } from '../../../src/custom-fetch';
+import { customFetch } from '../../../src/custom-fetch'
 
-type AwaitedInput<T> = PromiseLike<T> | T;
+type AwaitedInput<T> = PromiseLike<T> | T
 
-type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
+type Awaited<O> = O extends AwaitedInput<infer T> ? T : never
 
-
-type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1]
 
 /**
  * Retrieves a complete list of all available blog posts including their metadata and full content.
@@ -65,80 +57,87 @@ export type getAllBlogPostsResponse500 = {
   status: 500
 }
 
-export type getAllBlogPostsResponseComposite = getAllBlogPostsResponse200 | getAllBlogPostsResponse500;
+export type getAllBlogPostsResponseComposite =
+  | getAllBlogPostsResponse200
+  | getAllBlogPostsResponse500
 
 export type getAllBlogPostsResponse = getAllBlogPostsResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
 export const getGetAllBlogPostsUrl = () => {
-
-
-
-
   return `/BlogPosts`
 }
 
-export const getAllBlogPosts = async (options?: RequestInit): Promise<getAllBlogPostsResponse> => {
-
-  return customFetch<getAllBlogPostsResponse>(getGetAllBlogPostsUrl(),
-    {
-      ...options,
-      method: 'GET'
-
-
-    }
-  );
+export const getAllBlogPosts = async (
+  options?: RequestInit,
+): Promise<getAllBlogPostsResponse> => {
+  return customFetch<getAllBlogPostsResponse>(getGetAllBlogPostsUrl(), {
+    ...options,
+    method: 'GET',
+  })
 }
-
-
 
 export const getGetAllBlogPostsQueryKey = () => {
-  return [`/BlogPosts`] as const;
+  return [`/BlogPosts`] as const
 }
 
+export const getGetAllBlogPostsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getAllBlogPosts>>,
+  TError = ProblemDetails,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getAllBlogPosts>>,
+    TError,
+    TData
+  >
+  request?: SecondParameter<typeof customFetch>
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
 
-export const getGetAllBlogPostsQueryOptions = <TData = Awaited<ReturnType<typeof getAllBlogPosts>>, TError = ProblemDetails>(options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getAllBlogPosts>>, TError, TData>, request?: SecondParameter<typeof customFetch> }
-) => {
+  const queryKey = queryOptions?.queryKey ?? getGetAllBlogPostsQueryKey()
 
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllBlogPosts>>> = ({
+    signal,
+  }) => getAllBlogPosts({ signal, ...requestOptions })
 
-  const queryKey = queryOptions?.queryKey ?? getGetAllBlogPostsQueryKey();
-
-
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllBlogPosts>>> = ({ signal }) => getAllBlogPosts({ signal, ...requestOptions });
-
-
-
-
-
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getAllBlogPosts>>, TError, TData> & { queryKey: QueryKey }
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getAllBlogPosts>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey }
 }
 
-export type GetAllBlogPostsQueryResult = NonNullable<Awaited<ReturnType<typeof getAllBlogPosts>>>
+export type GetAllBlogPostsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getAllBlogPosts>>
+>
 export type GetAllBlogPostsQueryError = ProblemDetails
-
 
 /**
  * @summary Gets all blog posts with their metadata and content
  */
 
-export function useGetAllBlogPosts<TData = Awaited<ReturnType<typeof getAllBlogPosts>>, TError = ProblemDetails>(
-  options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getAllBlogPosts>>, TError, TData>, request?: SecondParameter<typeof customFetch> }
-
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-
+export function useGetAllBlogPosts<
+  TData = Awaited<ReturnType<typeof getAllBlogPosts>>,
+  TError = ProblemDetails,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getAllBlogPosts>>,
+    TError,
+    TData
+  >
+  request?: SecondParameter<typeof customFetch>
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getGetAllBlogPostsQueryOptions(options)
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey
+  }
 
-  query.queryKey = queryOptions.queryKey;
+  query.queryKey = queryOptions.queryKey
 
-  return query;
+  return query
 }
-
-
 
 /**
  * Retrieves a single blog post using its URL-friendly slug identifier.
@@ -174,78 +173,96 @@ export type getBlogPostBySlugResponse404 = {
   status: 404
 }
 
-export type getBlogPostBySlugResponseComposite = getBlogPostBySlugResponse200 | getBlogPostBySlugResponse404;
+export type getBlogPostBySlugResponseComposite =
+  | getBlogPostBySlugResponse200
+  | getBlogPostBySlugResponse404
 
 export type getBlogPostBySlugResponse = getBlogPostBySlugResponseComposite & {
-  headers: Headers;
+  headers: Headers
 }
 
-export const getGetBlogPostBySlugUrl = (slug: string,) => {
-
-
-
-
+export const getGetBlogPostBySlugUrl = (slug: string) => {
   return `/BlogPosts/${slug}`
 }
 
-export const getBlogPostBySlug = async (slug: string, options?: RequestInit): Promise<getBlogPostBySlugResponse> => {
-
-  return customFetch<getBlogPostBySlugResponse>(getGetBlogPostBySlugUrl(slug),
-    {
-      ...options,
-      method: 'GET'
-
-
-    }
-  );
+export const getBlogPostBySlug = async (
+  slug: string,
+  options?: RequestInit,
+): Promise<getBlogPostBySlugResponse> => {
+  return customFetch<getBlogPostBySlugResponse>(getGetBlogPostBySlugUrl(slug), {
+    ...options,
+    method: 'GET',
+  })
 }
 
-
-
-export const getGetBlogPostBySlugQueryKey = (slug: string,) => {
-  return [`/BlogPosts/${slug}`] as const;
+export const getGetBlogPostBySlugQueryKey = (slug: string) => {
+  return [`/BlogPosts/${slug}`] as const
 }
 
-
-export const getGetBlogPostBySlugQueryOptions = <TData = Awaited<ReturnType<typeof getBlogPostBySlug>>, TError = ProblemDetails>(slug: string, options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getBlogPostBySlug>>, TError, TData>, request?: SecondParameter<typeof customFetch> }
+export const getGetBlogPostBySlugQueryOptions = <
+  TData = Awaited<ReturnType<typeof getBlogPostBySlug>>,
+  TError = ProblemDetails,
+>(
+  slug: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getBlogPostBySlug>>,
+      TError,
+      TData
+    >
+    request?: SecondParameter<typeof customFetch>
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {}
 
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetBlogPostBySlugQueryKey(slug)
 
-  const queryKey = queryOptions?.queryKey ?? getGetBlogPostBySlugQueryKey(slug);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getBlogPostBySlug>>
+  > = ({ signal }) => getBlogPostBySlug(slug, { signal, ...requestOptions })
 
-
-
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getBlogPostBySlug>>> = ({ signal }) => getBlogPostBySlug(slug, { signal, ...requestOptions });
-
-
-
-
-
-  return { queryKey, queryFn, enabled: !!(slug), ...queryOptions } as UseQueryOptions<Awaited<ReturnType<typeof getBlogPostBySlug>>, TError, TData> & { queryKey: QueryKey }
+  return {
+    queryKey,
+    queryFn,
+    enabled: !!slug,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getBlogPostBySlug>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey }
 }
 
-export type GetBlogPostBySlugQueryResult = NonNullable<Awaited<ReturnType<typeof getBlogPostBySlug>>>
+export type GetBlogPostBySlugQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getBlogPostBySlug>>
+>
 export type GetBlogPostBySlugQueryError = ProblemDetails
-
 
 /**
  * @summary Gets a specific blog post by its URL slug
  */
 
-export function useGetBlogPostBySlug<TData = Awaited<ReturnType<typeof getBlogPostBySlug>>, TError = ProblemDetails>(
-  slug: string, options?: { query?: UseQueryOptions<Awaited<ReturnType<typeof getBlogPostBySlug>>, TError, TData>, request?: SecondParameter<typeof customFetch> }
-
+export function useGetBlogPostBySlug<
+  TData = Awaited<ReturnType<typeof getBlogPostBySlug>>,
+  TError = ProblemDetails,
+>(
+  slug: string,
+  options?: {
+    query?: UseQueryOptions<
+      Awaited<ReturnType<typeof getBlogPostBySlug>>,
+      TError,
+      TData
+    >
+    request?: SecondParameter<typeof customFetch>
+  },
 ): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
-
   const queryOptions = getGetBlogPostBySlugQueryOptions(slug, options)
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & { queryKey: QueryKey };
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey
+  }
 
-  query.queryKey = queryOptions.queryKey;
+  query.queryKey = queryOptions.queryKey
 
-  return query;
+  return query
 }
-
-
-

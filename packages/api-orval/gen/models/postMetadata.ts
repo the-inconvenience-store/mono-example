@@ -15,24 +15,24 @@ export interface PostMetadata {
    * @minLength 1
    * @maxLength 200
    */
-  title: string;
+  title: string
   /**
    * The publication date of the blog post in ISO format (YYYY-MM-DD)
    * @minLength 1
    * @pattern ^\d{4}-\d{2}-\d{2}$
    */
-  publishedAt: string;
+  publishedAt: string
   /**
    * A brief summary of the blog post content
    * @minLength 10
    * @maxLength 500
    */
-  summary: string;
+  summary: string
   /**
    * Optional featured image URL for the blog post
    * @minLength 0
    * @maxLength 500
    * @nullable
    */
-  image?: string | null;
+  image?: string | null
 }

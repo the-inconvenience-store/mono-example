@@ -8,14 +8,14 @@
 
 export interface ProblemDetails {
   /** @nullable */
-  type?: string | null;
+  type?: string | null
   /** @nullable */
-  title?: string | null;
+  title?: string | null
   /** @nullable */
-  status?: number | null;
+  status?: number | null
   /** @nullable */
-  detail?: string | null;
+  detail?: string | null
   /** @nullable */
-  instance?: string | null;
-  [key: string]: unknown;
+  instance?: string | null
+  [key: string]: unknown
 }

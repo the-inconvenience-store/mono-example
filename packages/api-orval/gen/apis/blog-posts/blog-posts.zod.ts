@@ -5,10 +5,7 @@
  * API for managing blog posts with MDX content parsing & retrieving the weather forecast
  * OpenAPI spec version: 1.0.0
  */
-import {
-  z as zod
-} from 'zod';
-
+import { z as zod } from 'zod'
 
 /**
  * Retrieves a single blog post using its URL-friendly slug identifier.
@@ -34,12 +31,19 @@ Sample response:
 ```
  * @summary Gets a specific blog post by its URL slug
  */
-export const getBlogPostBySlugPathSlugMax = 100;
+export const getBlogPostBySlugPathSlugMax = 100
 
-export const getBlogPostBySlugPathSlugRegExp = new RegExp('^[a-z0-9]+(?:-[a-z0-9]+)*$');
-
+export const getBlogPostBySlugPathSlugRegExp = new RegExp(
+  '^[a-z0-9]+(?:-[a-z0-9]+)*$',
+)
 
 export const getBlogPostBySlugParams = zod.object({
-  "slug": zod.string().min(1).max(getBlogPostBySlugPathSlugMax).regex(getBlogPostBySlugPathSlugRegExp).describe('The URL-friendly slug identifier for the blog post (e.g., \"getting-started-with-react\")')
+  slug: zod
+    .string()
+    .min(1)
+    .max(getBlogPostBySlugPathSlugMax)
+    .regex(getBlogPostBySlugPathSlugRegExp)
+    .describe(
+      'The URL-friendly slug identifier for the blog post (e.g., "getting-started-with-react")',
+    ),
 })
-
