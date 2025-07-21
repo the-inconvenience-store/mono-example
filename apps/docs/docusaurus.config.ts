@@ -19,6 +19,7 @@ const config: Config = {
         tsconfig: '../../packages/api-orval/tsconfig.json',
         out: './docs/api-orval',
         watch: process.env.TYPEDOC_WATCH,
+        plugin: ['typedoc-plugin-zod']
       },
     ],
     [
@@ -35,7 +36,9 @@ const config: Config = {
               categoryLinkSource: "tag"
             },
             showSchemas: true,
-            baseUrl: 'http://localhost:5074'
+            proxy: 'http://localhost:5074',
+            downloadUrl: "http://localhost:5074/swagger/v1/swagger.json",
+            showExtensions: true,
           } satisfies OpenApiPlugin.Options,
         }
       },
@@ -76,25 +79,26 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          docItemComponent: "@theme/ApiItem",
-          editUrl:
-            'https://github.com/the-inconvenience-store/mono-example/tree/main/apps/docs',
+          docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
+          // editUrl:
+          //   'https://github.com/the-inconvenience-store/mono-example/tree/main/apps/docs',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/the-inconvenience-store/mono-example/tree/main/apps/docs/blog',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+        blog: false,
+        //   blog: {
+        //   showReadingTime: true,
+        //   feedOptions: {
+        //     type: ['rss', 'atom'],
+        //     xslt: true,
+        //   },
+        //   // Please change this to your repo.
+        //   // Remove this to remove the "edit this page" links.
+        //   editUrl:
+        //     'https://github.com/the-inconvenience-store/mono-example/tree/main/apps/docs/blog',
+        //   // Useful options to enforce blogging best practices
+        //   onInlineTags: 'warn',
+        //   onInlineAuthors: 'warn',
+        //   onUntruncatedBlogPosts: 'warn',
+        // },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -114,11 +118,16 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'restSidebar',
           position: 'left',
-          label: 'Docs',
+          label: 'REST API',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        {
+          type: 'docSidebar',
+          sidebarId: 'typedocSidebar',
+          position: 'left',
+          label: 'TS API Client',
+        },
         {
           href: 'https://github.com/the-inconvenience-store/mono-example',
           label: 'GitHub',
@@ -158,10 +167,6 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
             {
               label: 'GitHub',
               href: 'https://github.com/facebook/docusaurus',

@@ -1,6 +1,6 @@
 # Interface: PostMetadata
 
-Defined in: [packages/api-orval/gen/models/postMetadata.ts:12](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/models/postMetadata.ts#L12)
+Defined in: [packages/api-orval/gen/models/postMetadata.ts:12](https://github.com/the-inconvenience-store/mono-example/blob/77ed7dd80da67d5d4a2bd8320e638952ed491201/packages/api-orval/gen/models/postMetadata.ts#L12)
 
 Represents metadata for a blog post extracted from MDX frontmatter
 
@@ -10,7 +10,7 @@ Represents metadata for a blog post extracted from MDX frontmatter
 
 > `optional` **image**: `string`
 
-Defined in: [packages/api-orval/gen/models/postMetadata.ts:37](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/models/postMetadata.ts#L37)
+Defined in: [packages/api-orval/gen/models/postMetadata.ts:37](https://github.com/the-inconvenience-store/mono-example/blob/77ed7dd80da67d5d4a2bd8320e638952ed491201/packages/api-orval/gen/models/postMetadata.ts#L37)
 
 Optional featured image URL for the blog post
 
@@ -30,7 +30,7 @@ Optional featured image URL for the blog post
 
 > **publishedAt**: `string`
 
-Defined in: [packages/api-orval/gen/models/postMetadata.ts:24](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/models/postMetadata.ts#L24)
+Defined in: [packages/api-orval/gen/models/postMetadata.ts:24](https://github.com/the-inconvenience-store/mono-example/blob/77ed7dd80da67d5d4a2bd8320e638952ed491201/packages/api-orval/gen/models/postMetadata.ts#L24)
 
 The publication date of the blog post in ISO format (YYYY-MM-DD)
 
@@ -48,7 +48,7 @@ The publication date of the blog post in ISO format (YYYY-MM-DD)
 
 > **summary**: `string`
 
-Defined in: [packages/api-orval/gen/models/postMetadata.ts:30](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/models/postMetadata.ts#L30)
+Defined in: [packages/api-orval/gen/models/postMetadata.ts:30](https://github.com/the-inconvenience-store/mono-example/blob/77ed7dd80da67d5d4a2bd8320e638952ed491201/packages/api-orval/gen/models/postMetadata.ts#L30)
 
 A brief summary of the blog post content
 
@@ -66,7 +66,7 @@ A brief summary of the blog post content
 
 > **title**: `string`
 
-Defined in: [packages/api-orval/gen/models/postMetadata.ts:18](https://github.com/the-inconvenience-store/mono-example/blob/d567288f2dff3ffa4a2fdf7eb46acac0b7cd0929/packages/api-orval/gen/models/postMetadata.ts#L18)
+Defined in: [packages/api-orval/gen/models/postMetadata.ts:18](https://github.com/the-inconvenience-store/mono-example/blob/77ed7dd80da67d5d4a2bd8320e638952ed491201/packages/api-orval/gen/models/postMetadata.ts#L18)
 
 The title of the blog post
 
